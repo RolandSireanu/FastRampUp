@@ -1,0 +1,4 @@
+
+
+b = bytearray((0xAA,0x11,0xA0));
+print(b)

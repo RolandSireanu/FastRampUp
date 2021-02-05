@@ -61,6 +61,7 @@ int main()
 
     c2(a);      //T = int&,         ParamType = int&
     c2(b);      //T = const int&,   ParamType = const int&
+    c2(r);      //T = int&          ParamType = int&
     c2(9);      //T = int,          ParamType = int&&
 
     //=================================================================

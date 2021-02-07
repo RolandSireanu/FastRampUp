@@ -115,6 +115,18 @@ class GeneralClass<float>
         float member = 0.001f;
 };
 
+template<typename T>
+T add(T arg)
+{
+    return arg;
+}
+
+
+template<typename T , typename... Args>
+T add(T first , Args... args)
+{
+    return first + add(args...);
+}
 
 
 int main()
@@ -144,7 +156,8 @@ int main()
     GeneralClass<float> gcf;
     //gcf.method();     GeneralClass<float> has no "method"
     gcf.member;
-
+    
+    int r = add(1,2,3,4,5,6);
 
     return 0;
 }

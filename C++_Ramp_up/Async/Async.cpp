@@ -2,6 +2,7 @@
 #include <thread>
 #include <future>
 #include <chrono>
+#include <vector>
 using namespace std;
 using namespace std::chrono;
 
@@ -53,15 +54,24 @@ int main()
     #else 
     //Start 4 threads and spliting the workload
     //Don't care about thread join , reusing threads etc 
-    future<int> res1 = std::async(std::launch::async, prime,1,250000);
-    future<int> res2 = std::async(std::launch::async, prime,250000,500000);
-    future<int> res3 = std::async(std::launch::async, prime,500000,750000);
-    future<int> res4 = std::async(std::launch::async, prime,750000,1000000);
-    res1.wait();
-    res2.wait();
-    res3.wait();
-    res4.wait();
-    cout << "Total = " << res1.get() + res2.get() + res3.get() + res4.get() << endl;
+    const int nrOfThreads = 16;
+    const int workload = 1000000;
+    const int resolution = workload / nrOfThreads;
+    std::vector<std::future<int> > v(nrOfThreads);
+
+    for(int i=0; i<nrOfThreads; i++)
+    {
+        v[i] = std::async(std::launch::async, prime,i*resolution,(i*resolution+resolution));    
+    }
+
+    for(int i=0; i<nrOfThreads; i++)
+        v[i].wait();
+
+    unsigned int sum = 0;
+    for(int i=0; i<nrOfThreads; i++)
+        sum = sum + v[i].get();
+    
+    cout << "Total = " << sum << endl;
     #endif
     auto stop = high_resolution_clock::now();
 

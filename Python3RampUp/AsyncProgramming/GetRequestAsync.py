@@ -9,6 +9,7 @@ import time
 
 #Parallel processing through asyncio 
 #When await is hit , the coroutine is stoped at that point until the result is available
+#and object is send to event loop to be run async
 #await = yield from , but onlu on awaitable objects
 
 async def getSlowHtml():

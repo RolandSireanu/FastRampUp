@@ -1,0 +1,102 @@
+<html>
+<head>
+<script>
+    console.log(add(2,2));
+
+    // function declaration
+    //function are move on top of their scope => use before declaration
+    function add(a,b){
+        return a + b;
+    }
+
+    //function expressions
+    //name is option , they can be anonymus and are not hoisted
+    const f = function(a,b){
+        return a+b;
+    }
+    console.log(f(2,1));
+
+    
+    const arrowFunction = (a,b) => {
+        return a+b;
+    }
+    console.log(arrowFunction(4,4));
+
+    //Function expressions can be invoked when defined
+    //IIFE (Immediately Invoked Function Expression)
+    console.log((function specialAdd(a,b){
+        return a+b;
+    })(2,10));
+
+    !function verySpecialAdd(a,b){
+        console.log(a+b);
+    }(10,10); 
+
+    //Functions can be made methods
+    const obj = {
+        method1 : function () {
+            console.log("Hello from method1 ");
+        }
+    };
+    obj.method1();
+    //The shorthanded version of method
+    const obj2 = {
+         method1(){
+            console.log("Hello from shorthand version of method !")
+        }
+    }
+    obj2.method1()
+
+    //Methods have access to object's properties through this keyword
+    const obj3 = {
+        l : [],
+        addToList(element){
+            this.l.push(element);
+        }
+    }
+    obj3.addToList(2)
+    obj3.addToList("a")
+    obj3.addToList(2.3)
+    console.log(obj3.l)
+
+    //Functions created with arrows syntax don't have their own this , 
+    //they should be use just as inline functions not methods
+
+    //Functions inherits method from parent class Function.prototype
+    //like call or apply 
+    console.log(add.call(null, 3,3));
+    //Apply calls the method with an associated object and a list of args
+    obj2.method1.apply(obj2,[]);
+
+    //Function as a closure
+    // 
+    function database()
+    {
+        elements = [];
+
+        return function (element){
+            if(element){
+                elements.push(element);
+            }
+
+            return elements;
+        }
+    }
+    //db function is a closure , it referes to elements from the parrent class
+    //and it keeps the list alive even after database function finished execution
+    const db = database();
+    db(1);
+    db(2);
+    db(3);
+    console.log(db())
+
+</script>
+
+</head>
+<body>
+
+
+
+</body>
+
+</html>

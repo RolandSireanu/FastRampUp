@@ -1,0 +1,125 @@
+/* Select by html element */
+p {
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+div {
+    border: 2px solid black;
+    width: 50%;
+    margin: auto;
+}
+
+span {
+    border: 2px solid black;
+}
+
+#div221 {
+    margin: auto;
+    padding: 5px;
+    height: 50%;
+    background-color: aqua;
+    text-align: center;
+}
+
+.myButton {
+    width: 50%; /* takes 50% of the parrent element who has defined a width */
+    height: 80%;  /* takes 10% of the parrent element who has defined a width */
+    color: cadetblue;
+}
+
+/* div with class=draw */
+div.draw {
+    width: 25%;
+}
+
+/* Every html element on the page */
+/* * {
+    color:rebeccapurple;
+} */
+
+/* grouping selector , apply on all elements with class divClass
+and id div222 */
+.divClass, #div222{
+    border: 5px solid blue;
+    
+}
+
+/*      Combinators selectors       */
+/* Select elements based on a relationship between them */
+/* 
+    descendant selector (space)
+    child selector (>)
+    adjacent sibling selector (+)
+    general sibling selector (~)
+*/
+
+
+/* all buttons with div parrents */
+div > button {
+   border-radius: 8px;
+}
+
+/* all the h2 elements with div as ascendent */
+div h2 {
+    color:chartreuse;
+}
+
+/* all p elements immediatly after h1 element */
+h1+p {
+    font-size: x-small;
+}
+
+/* All the h1 elements which comes after a span element */
+span~h1 {
+    color:rgb(51, 62, 219);
+}
+
+
+/*      CSS pseudo-classes      */
+/* ==============================*/
+/* 
+A pseudo-class is used to define a special state of an element.
+
+For example, it can be used to:
+
+Style an element when a user mouses over it
+Style visited and unvisited links differently
+Style an element when it gets focus 
+syntax:
+selector:pseudo-class {
+    property: value;
+}
+*/
+
+a:link {
+    color:rgb(201, 27, 79);
+}
+
+a:visited {
+    color: rgb(122, 233, 32);
+}
+
+/* Combining pseudo-classes with css classes */
+a.myLink:hover {
+    color: #FF00FF;
+}
+
+a:active {
+    color: darkgoldenrod;
+}
+
+/* Note: a:hover MUST come after a:link and a:visited in the CSS definition in order to be effective! 
+a:active MUST come after a:hover in the CSS definition in order to be effective! 
+Pseudo-class names are not case-sensitive. */
+
+div#div222:hover {
+    background-color: darkkhaki;
+}
+
+
+
+/* Any element with class=cls that is the first child of another element */
+.cls:first-child {
+    color:darkorchid;
+}

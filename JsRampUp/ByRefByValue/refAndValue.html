@@ -1,0 +1,28 @@
+<html>
+    <body>
+        <script>
+            //In javascript all the primitive types are handled as value
+            a = 2
+            //A new slot will be allocated in memory for "b" variable and copied the a's value in it 
+            //a will point to memory location X and b will point to memory location Y but both location
+            //has the same value
+            b = a
+
+
+            //All objects are handled as references 
+            obj1 = {
+                name: "John",
+                age: 22
+            }
+
+            //obj2 and obj2 are pointing to the same sport in memory
+            //if one of them mutate , the other one will mutate as well 
+            obj2 = obj1;
+
+            obj2.name = "Snow"
+            console.log(obj1)
+
+
+        </script>
+    </body>
+</html>

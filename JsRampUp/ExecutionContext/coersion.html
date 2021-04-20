@@ -1,0 +1,19 @@
+<html>
+    <body>
+        <script>
+            //Coersion is auto converting a type to another type
+            //All kinds of stange problems appears due to this "feature"
+            console.log("3" == 3);      //3 will be converted to "3" 
+            console.log(false == 0);
+            console.log("" == false);
+            console.log(null < 3);
+
+            //Solution to all this wierd situations => "==="
+            //Will compare the values but without type coersion
+            //If values are of different types , will return FALSE
+
+            console.log("3" === 3);
+            console.log(false === 0);
+        </script>
+    </body>
+</html>

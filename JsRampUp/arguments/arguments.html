@@ -1,0 +1,27 @@
+<html>
+    <body>
+
+        <script>
+            function f(...arguments){
+                console.log(arguments)
+            }
+            f(false, null, "aaa");
+
+            function namedArguments({firstArg, secondArg, thirdArg}){
+                console.log(firstArg)
+                console.log(secondArg)
+                console.log(thirdArg)
+            }
+
+            namedArguments({thirdArg:"AAA", firstArg:"BBB", secondArg:"CCC"})
+
+            function combined({arg1,arg2},...arguments){
+                console.log(arg1)
+                console.log(arg2)
+                console.log(arguments)
+            }
+
+            combined({arg2:"argument2", arg1:"argument1"}, false,"true")
+        </script>
+    </body>
+</html>

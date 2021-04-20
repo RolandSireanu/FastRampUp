@@ -1,0 +1,35 @@
+<html>
+    <body>
+        <script>
+
+            function f1()
+            {
+                //Something bad has happened , return null
+                return null;
+            }
+
+            console.log(Boolean(""))
+            console.log(Boolean(undefined))
+            console.log(Boolean(null))      
+
+            //Every not existance flag (like empty string , undefined , null) is converted by Boolean
+            //to false. We can use it in our advantage by:
+
+            //We have some function which returns a value 
+            var a;
+            a = f1()
+
+            //We can use variable coercision for checking if the result was valid 
+            //it doesn't really matters how is the function signaling a failure scenario
+            //by empty string , null, undefined or 0 we will also convert it to False
+            if(a){
+                console.log("Returns OK ")
+            }
+            else
+            {
+                console.log ("Returns NOK !")
+            }
+
+        </script>
+    </body>
+</html>

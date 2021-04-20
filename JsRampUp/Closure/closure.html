@@ -1,0 +1,82 @@
+<html>
+    <body>
+        <script>
+
+            //Closure it is a feature of JavaScript, it keeps the context intact for further
+            //function calls of the inner function
+            function f(arg) {
+                return function () {
+                    console.log(arg);
+                }
+            }
+            var callable = f("Hello");
+            callable();
+            
+
+            
+            function factory() {
+                var functions = [];
+
+                for(var i=0; i<3; i++) {
+                    functions.push(function () {
+                        console.log(i);
+                    });
+                }
+
+                return functions;
+            }
+            var fp = factory();
+            //All the function expressions will print "3"
+            //This would be the last value of variable "i" which is kept in closure
+            fp[0]();
+            fp[1]();
+            fp[2]();
+
+
+            //If we want to print 0, 1, 2 we should use three different variables
+            //Using ES6 , let has block scope => every loop iteration a new temp variable will be created
+            function factory2() {
+                var functions = [];
+
+                for(var i=0; i<3; i++) {
+                    let temp = i;
+
+                    functions.push(function () {
+                        console.log(temp);
+                    });
+                }
+
+                return functions;
+            }
+
+            fp2 = factory2();
+            fp2[0]();
+            fp2[1]();
+            fp2[2]();
+
+
+            //Using ES5 , creating another execution context with IIFE where to store closure variables
+            function factory3() {
+                var functions = []
+
+                for(var i=0; i<3; i++) {
+                    functions.push((function temp(arg){
+                        return function () {
+                            console.log(arg);
+                        }
+                    })(i));                        
+                }
+
+                return functions;
+            }
+
+            fp3 = factory3();
+            fp3[0]();
+            fp3[1]();
+            fp3[2]();
+
+
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,36 @@
+<html>
+    <body>
+        <script>
+            //These options introduced with first class functions , produce a new branch of programming
+            //called FUNCTIONAL PROGRAMMING
+
+
+            //Expression = unit of code that results in a value
+            //Statement = do work , doesn't necessary produce a value
+
+            //Function statement
+            //In the executin phase of the execution context, it doesn't result in a value
+            function f1(){
+                console.log("hello world")
+            }
+            
+            //Function expression
+            //In the execution phase of Execution context it result in a value ( function object )
+            //This function object doesn't have a "name" property, it is anonymus
+            var anonymus = function() {
+                console.log("hello world")
+            }
+
+            function wrapper(f){
+                f();
+            }
+
+            //First class function , functions that can be passed around , created on the fly 
+            wrapper(function(){
+                console.log("I am an anonymus function ");
+            });
+
+            anonymus();
+        </script>
+    </body>
+</html>

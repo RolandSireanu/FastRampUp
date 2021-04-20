@@ -1,0 +1,34 @@
+<html>
+    <body>
+        <script>
+
+            //Every execution context has a reference to the outter environment
+            //When an addressed variable is not found in the current execution environment , 
+            //the outter environment reference is used until the variable is found in one of the 
+            //outter environments until the Global environment scope 
+
+            var a;
+            a = "Hello world !";
+            f1();
+
+
+            function f1()
+            {
+                f2();
+                
+                function f2()
+                {
+                    f3();
+
+                    function f3()
+                    {
+                        console.log(a);
+                    }
+            
+                }
+            }
+            
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,40 @@
+<html>
+    <body>
+        <script>
+            //IIFE Immediately invoked function execution
+
+            var resultOfExecution = function () {
+                console.log("Hello world from IIFE")
+                return "OK";
+            }();
+
+            console.log(resultOfExecution)
+
+            var resultOfExecution2 = function () {
+                return "Super OK";
+            }();
+
+            //This will throw an error , resultOfExecution2 is not a callable object 
+            try {
+                console.log(resultOfExecution2());
+            }catch(Exception)
+            {
+                console.log(Exception)
+            }
+
+
+            var special = "Salut";
+            //Another way of writing IIFE 
+            (function (){
+                var special = "Hello";
+                console.log("IIFE in parenthesis");
+                console.log(special);
+            })();
+
+            //The main benefit of this pattern vs writing code in the global execution context
+            //is that all your variables are not interferring with the global ones
+            //You can't change the variables from the global context
+
+        </script>
+    </body>
+</html>

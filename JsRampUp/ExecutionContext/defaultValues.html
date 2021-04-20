@@ -1,0 +1,23 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <script>
+            //The OR operator "||" doesn't returns just true or false
+            //It return the value that can be cast to true or fale 
+            console.log("" || "HelloWorld");    //This is equal with True => "HelloWorld" will be returned
+
+            function f(argument){
+                argument = argument || "DefaultArgument";
+
+                console.log(argument);
+            }
+
+            f(null);        //"DefaultArgument will be print"
+            f(22)
+            f("Hello")
+
+        </script>
+    </body>
+</html>

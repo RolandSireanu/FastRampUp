@@ -1,0 +1,27 @@
+<html>
+    <head>
+       
+
+
+    </head>
+    <body>
+        <script>
+            //Every js code is executing in an environment context
+            //Two phases : Creation and Execution 
+            //In Creation parser will look for every definition of function or variable and setup
+            //enough memory for them. All the memory for variables are init with undefined 
+            //Functions are usable from the Creation phase
+            //In execution phase , code start to execute line by line 
+
+            console.log(varA);      //This is value undefined , init in Creation phase
+            varA = "Hello world !"; 
+            f1();                   //This will print "Hello world", 
+            
+            var varA;
+            function f1(){
+                console.log(varA);
+            }
+
+        </script>
+    </body>
+</html>

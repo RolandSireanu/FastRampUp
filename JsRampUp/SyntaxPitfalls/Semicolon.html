@@ -1,0 +1,24 @@
+<html>
+    <body>
+        
+        <script>
+            function getObject() {
+                return 
+                {
+                    name: "John"
+                }
+            }
+            
+            //This will print undefined because js syntax parser will append a semicolon after return 
+            //Js by default will try to insert semicolons for you
+            console.log(getObject());
+
+
+
+            // Rule number 1 
+            //      Always use the java style brackets " return { " or "function { " 
+            // Rule number 2
+            //      Place your own semicolons , don't relay on js to do it for you
+        </script>
+    </body>
+</html>

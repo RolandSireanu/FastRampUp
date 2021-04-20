@@ -1,0 +1,3 @@
+By default the html and body tasgs are only as height as the actuak page content. 
+If you have two lines of text on your webpage , the height of html and body will be around 40px height. 
+

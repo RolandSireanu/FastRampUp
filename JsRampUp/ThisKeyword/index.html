@@ -1,0 +1,36 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+
+
+        <script>
+
+            //"This" keyword usually bind to the upper object (user defined or global object )
+            //For inner functions , "this" will bind to global object => STRANGE THING
+            //For this reasson, we use "self" design pattern.
+
+            var obj = {
+                name: "Object1",
+                f : function () {
+                    var self = this;
+                    //"this" binds to upper "obj" object 
+                    console.log(this)
+
+                    var inside = function () {
+                        //"this" binds to global object
+                        //console.log(this)
+                        console.log(self);
+                    }
+
+                    inside();
+                }
+            }
+            
+            //"this" binds to global object
+            console.log(this)
+            obj.f();
+        </script>
+    </body>
+</html>

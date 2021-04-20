@@ -1,0 +1,32 @@
+<html>
+    <body>
+        <script>
+            //In javascript functions are objects too !!! 
+            //First class functions 
+            //Everything you can do with other primitive types like numbers or strings , you can do with functions. 
+            //You can store functions in variable , pass them as argument , attach properties to them , functions , just
+            //like a classic object.
+            //Create them on the fly with literal syntax ! 
+
+            function f1()
+            {
+                console.log("hello world !");
+            }
+
+            f1.customProperty = "Salutare lume !";
+            console.log(f1.customProperty)
+
+            f1.hiddenFunction = function () {
+                console.log("I am a hidden function !")
+            }
+
+            f1.hiddenFunction()
+
+            //The code that you write is placed in a special property of the function object
+            //The code that you write is NOT the function object.
+            //The function is just an object with other properties , and the code that you write is just another
+            //property (a callable property )
+
+        </script>
+    </body>
+</html>>

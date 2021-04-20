@@ -1,0 +1,32 @@
+<html>
+    <body>
+        <script>
+
+            //Every function call has its own execution context
+            //which resides on execution context stack, at the bottom would be global execution context
+            function f1()
+            {
+                //Execution context of f1 here  ( globalExeCont -> f1 context)
+                console.log(a);
+                var a;
+
+                a="F1 hello world !"
+
+                console.log(a);
+
+                f2();
+            }
+
+            function f2()
+            {
+                //Execution context of f2 here ( globalExeCont -> f1 context -> f2 context )
+            }            
+
+            //Global execution context here
+            f1();
+            
+            
+
+        </script>
+    </body>
+</html>

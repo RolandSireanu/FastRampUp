@@ -1,0 +1,49 @@
+<html>
+    <body>
+        <script>
+            //Another way to create an object , besides :
+            //Function constructor , and object literal , is Object.create
+            //THis is a builtin function of Js 
+
+            var person = {
+                name: "John",
+                lastName: "Snow",
+                age: 63
+            };
+
+            //Object.create creates a new empty object, and set its prototype
+            //to "person" object. Will inherit all the properties and functions
+            var object1 = Object.create(person);
+            //Now we can "overwrite" or append new properties / functions
+            //Appending members with the same name , it is like overwriting the
+            //ones given by parrent. The engine will go on prototype chain and 
+            //will find "name" member inside the current object , so the "name" 
+            //member from person it is hidden.
+            object1.name = "Dodo";
+            console.log(object1);
+            //Engine will go through prototype chain until it hits "person" object
+            console.log(object1.age)
+
+
+            //If you have to support an older browser, that doesn't have 
+            //Object.create feature , you can use a polyfill 
+            //Polyfill = fill in the gaps 
+
+            if(!Object.create) {
+                Object.create = function (obj) {
+                    if (arguments.length > 1) {
+                        throw new Error("Function supports just one argument");
+                    }
+                    //Inner function constructor
+                    function F() {}
+                    //Prototype of function constructor point to passed object
+                    //Every object created from this will "inherit" from the 
+                    //prototype object.
+                    F.prototype = obj;
+                    return new F();
+                }
+            }
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,61 @@
+<html>
+    <body>
+        <script>
+            //FUNCTIONAL PROGRAMMING = We think and code in terms of functions
+
+            function mapForEach(arr, fn) {
+                var arr2 = []
+
+                for(var i=0; i<arr.length; i++) {
+                    arr2.push(fn(arr[i]));
+                }
+
+                return arr2;
+            }
+
+            newArr = mapForEach([1,2,3,4], function(arg) {
+                return arg * arg;
+            });
+            console.log(newArr);
+
+            newResults = mapForEach([1,2,3,4], function(arg) {
+                return ( arg > 2 ? true : false);
+            });
+            console.log(newResults);
+
+            //Make the threshold variable
+            // ================== Method 1 ======================
+            function mapForEachUpdated(arr, fn, arg1) {
+                var retArr = [];
+
+                for(var i=0; i<arr.length; i++) {
+                    retArr.push(fn(arr[i], arg1));
+                }
+
+                return retArr;
+            }
+
+            arrayTemp = mapForEachUpdated([1,2,3,4,5], function (arg, threshold) {
+                return (arg > threshold ? true : false);
+            },2);
+            console.log(arrayTemp);
+            // ================================================
+
+            // ============= Method 2 ==========================
+            function factory(threshold) {
+
+                var tempFunction = function (threshold, arg) {                
+                    return (arg > threshold ? true : false);
+                }.bind(this,threshold);
+
+                return tempFunction;
+            }
+
+            arrayTemp = mapForEach([1,2,3,4,5], factory(0));
+            console.log(arrayTemp);
+            // ==================================================
+            
+
+        </script>
+    </body>
+</html>

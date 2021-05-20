@@ -1,0 +1,32 @@
+<html>
+    <body>
+        <script>
+            var n = new Number(5);
+            //Engine will see that we have a primitive value and an object
+            //Will try to convert the object value to primitive and values
+            //will be equal
+            if(5 == n) {
+                console.log("With == operator , values are equal");
+            }
+
+            //Engine will not try to convert the object into a primitive
+            //will see that there are different types , so will return false
+            if(5 === n) {
+
+            }
+            else {
+                console.log("With === operator, values are not equal");
+            }
+
+            //Any type of comparison needs to be against the same type
+
+            //When you use builtins to create primitives , like new Number(5) , 
+            //you actually create objects and situations like the one described about
+            //can rise up.
+            //It is strongly indicated to not used builtin constructors , but instead
+            //literals , example : 
+            var a = 5;
+            var b = "I am a string "
+        </script>
+    </body>
+</html>

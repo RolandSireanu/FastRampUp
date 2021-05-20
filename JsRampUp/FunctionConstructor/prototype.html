@@ -1,0 +1,57 @@
+<html>
+    <body>
+        <script>
+            //Prototype is an empty object , attached to every function in Js.
+            //It is used only when the function is called as a function constructor , with new operator
+
+            function construct(arg) {
+                this.name = arg
+            }
+
+            var obj1 = new construct("John");
+            console.log("obj1 = ")
+            console.log(obj1)
+            //His prototype is "construct function , which is also an object"
+            //So whatever property is set to construct, will be inherited by all
+            //the instantiated objects
+            
+            construct.prototype.tellMeYourName = function () {
+                console.log("My name is ", this.name);
+            }
+            obj1.tellMeYourName();
+
+            var obj2 = new construct("Doe");
+            obj2.tellMeYourName();
+
+            //If I had added the tellMeYourName in the constructor implementation , every object 
+            //created with "construct" would have a copy of the "tellMeYourName" function.
+            //The memory used in this way would be way higher than if we had a single copy in prototype and every object
+
+            //As a convention , in order not to mess the regular function and function constructor, 
+            //the latest , always start with a capital letter
+            function FuncConst(){
+
+            }
+            var obj_n =  new FuncConst();
+
+
+
+            //We can extend the fetures of the bultin types in Javascript in this way
+            //All the string objects will have access to "itStartsWith" function
+            String.prototype.itStartsWith = function (character) {                
+                let index = this.indexOf(character);
+                if(index === 0) {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            console.log("CuSu".itStartsWith("C"));
+
+
+        </script>
+    </body>
+</html>

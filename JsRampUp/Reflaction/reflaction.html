@@ -1,0 +1,45 @@
+<html>
+    <body>
+        <script src="../underscore.js"></script>
+        <script>
+            //Reflection = An object can look at itself , changing and listing 
+            // its properties and methods.
+
+            object1 = {
+                property1: "value1",
+                property2: "value2"
+            }
+
+            object2 = {
+                property21: "value21",
+                property22: "value22"
+            }
+
+            object3 = {
+                property31: "value31",
+                property32: "value32"
+            }
+
+            //Append property
+            object1.property3 = "value3";
+
+            //Listing property 
+            for (var p in object1) {
+                console.log(p)
+                console.log(object1[p]);
+            }
+
+            //All this features lead to Extend pattern 
+            //Take multiple objects (with all the property and values) ,
+            //and compose them into a single object 
+
+            _.extend(object1, object2, object3);
+
+            for(var p in object1) {
+                console.log(p +" : "+object1[p]);
+            }
+
+
+        </script>
+    </body>
+</html>

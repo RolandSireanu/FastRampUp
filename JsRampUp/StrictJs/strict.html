@@ -1,0 +1,26 @@
+<html>
+    <body>
+        <script>
+            "use strict";
+            //By default , Js lets you to use a variable even if it hasn't been declared 
+            //and this feature cand lead to following problems : 
+            var person;
+            persom = [1,2,3]
+            console.log(persom)
+            console.log(person)
+
+            //In order to avoid this , strict mode can be used 
+            
+            //"use strict;" can be used also in smaller scopes , like functions 
+
+            function test()
+            {
+                "use strict;"
+                number = 222;
+            }
+
+            test();
+
+        </script>
+    </body>
+</html>

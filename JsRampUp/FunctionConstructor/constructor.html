@@ -1,0 +1,37 @@
+<html>
+    <body>
+        <script>
+            //A different way of buiulding objects in Js is through function constructors
+            //We saw in the past leassons how we can build the objects with "objects literals"
+            //"new" operator creates an empty object (set the "this" keyword to it) and it passes to function contrustor
+            //Function constructor will build the object's properties and returns the object
+
+            function constructorObject(arg1, arg2) {
+                this.name = arg1;
+                this.age  = arg2;
+                //Here this will be returned
+                console.log(this.__proto__.__proto__)
+            }
+
+            //By putting the new operator in front of a function 
+            //the "this" keyword is set to an empty object and it is pass to 
+            //function constructor. Otherwise , "this" inside the function , 
+            //would have pointed to the global object
+            var object1 = new constructorObject("John", "44");
+            console.log(object1);
+
+            //We can test the return value by interfering in the process
+            function constructorObject2(arg1, arg2) {
+                this.name = arg1;
+                this.age  = arg2;
+                
+                return {title: "I am interfering in the process , sorry !"};
+            }
+
+            var object2 = new constructorObject2("Doe","22");
+            console.log(object2);
+
+
+        </script>
+    </body>
+</html>

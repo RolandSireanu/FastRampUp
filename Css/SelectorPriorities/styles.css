@@ -1,0 +1,34 @@
+/* Group priorities  */
+/* 1st : !important
+   2nd : style defined in html
+   The third priority group contains rules that have one or more ID selectors.
+   The fourth priority group contains rules that have one or more class, attribute, or pseudo-selector.
+   The fifth priority group contains rules that have one or more element selectors.
+   And last, the sixth (and lowest) priority group contains rules that have only a universal selector.
+*/
+
+h1 {
+    color:blue !important;
+}
+
+
+#myId {
+    color:indigo;
+    font-size: 20px;
+}
+
+.element {
+    height: 100vh;
+    border: 1px solid black;
+    margin: 0px;
+}
+
+.pant {
+    color:lawngreen;
+}
+
+.bg {
+    height: 100vh;
+    background-image: url("http://i.imgur.com/Mx3P487.png");
+    background-repeat: no-repeat;
+  }

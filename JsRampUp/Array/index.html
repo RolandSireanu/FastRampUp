@@ -10,8 +10,33 @@
             array = [1, false, {name:"John", age:22}, function (){
                 console.log("Hello world from array")
             }];
-
             console.log(array)
+
+            //Arrays are objects in Js , like anything else
+            //Value of an array is a key:Value pair. 
+            myArray = [10,20,30,40];
+            //By parsing it with for ... in , we will print all the properties
+            //in our case : 0:10 , 1:20 ... etc
+            for(var prop in myArray) {
+                console.log(prop + " : " + myArray[prop]);
+            }
+
+            //But if some framework, extend the Array with some custome property
+            Array.prototype.customProperty = "propertyValue";
+            for(var prop in myArray) {
+                console.log(prop + " : " + myArray[prop]);
+            }
+            //Our array will contain also the customProperty key:value pari
+
+            // ========== Solution ============= 
+            //This is why is recomanded to use the classical index for
+            //Not to go through prototype
+            for(var i=0; i<myArray.length; i++) {
+                console.log(myArray[i]);
+            }
+
+
+
         </script>
     </body>
 </html>

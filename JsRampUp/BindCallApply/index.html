@@ -1,0 +1,89 @@
+<html>
+    <body>
+        <script>
+            var obj1 = {
+                name: "MyObject",
+                //In this context "this" points to obj1
+                f : function () {
+                    console.log("Object name is "+this.name);
+                }
+            }
+
+            obj1.f();
+
+            //In this context , "this" points to global object "window"
+            function test(arg1) {
+                console.log(arg1)
+                this.f();
+            }
+
+            //Every function in js gets three methods bind, call, apply
+            //Bind method make a copy of current function and set "this" pointer
+            //to provided object
+
+            var newTest = test.bind(obj1);
+            //This call works fine , newTest is just a copy of test function with a modified
+            //this pointer
+            newTest("Hello");
+            //This call will result in an uncaught error 
+            //test();
+
+            //Call method doesn't create a new function like bind does, but call the actual
+            //function with a choosen "this" variable
+
+            test.call(obj1, "Hello");
+
+
+            //Apply method does exactly the same thing as "call" , with one exception , it accepts 
+            //an array of parameters 
+
+            test.apply(obj1, ["Hello"]);
+
+
+            //It works also for anonymus functions 
+            ( function (arg1) {
+                console.log(arg1);
+                this.f();
+            }
+            ).apply(obj1, ["World"]);
+
+
+            //Function borrowing , pattern 
+            var myObject = {
+                name: "John",
+                age : 22,
+                printMe : function () {
+                    console.log(this.name+" is "+this.age+" years old.");
+                }
+            };
+
+            var yourObject = {
+                name: "Serghei",
+                age : 67
+            };
+
+            //We borrow "printMe" method from "myObject" and call in in "yourObject" context
+            myObject.printMe.apply(yourObject,[])
+
+
+            //Function currying 
+            //Creating a copy of the function but with some preset parameters
+            function tellMeAJoke(arg1, arg2) {
+                if ((arg1+arg2) > 10) {
+                    console.log("Rabbit joke");
+                }
+                else {
+                    console.log("Cat joke");
+                }
+            }
+            //newTellMeAJoke is a new function , where the first parameter will always be 5
+            var newTellMeAJoke = tellMeAJoke.bind(this, 5);
+            //The second parameter will be 6
+            newTellMeAJoke(6);
+            newTellMeAJoke(5);
+
+
+
+        </script>
+    </body>
+</html>

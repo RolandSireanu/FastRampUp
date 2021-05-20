@@ -1,0 +1,75 @@
+<html>
+    <body>
+        <script>
+
+            // __proto__ property should never be accessed
+            // It represents the parent of the current object
+
+
+            obj1 = {
+                name: "Object",
+                lifetime: "30m",
+                innerObj : {
+                    innerObjName: "inner"
+                }
+            };
+
+            console.log(obj1);
+            console.log(obj1.__proto__);
+            console.log("parent of parent of object is :")
+            console.log(obj1.__proto__.__proto__)
+            console.log(obj1.innerObj.__proto__);
+
+
+            function f1() {
+                return true;
+            }
+            console.log(f1.__proto__);
+
+            arr = [1,2,3]
+            console.log("Parent of an array is :")
+            console.log(arr.__proto__);
+            console.log("Parent of parrent of an array is :");
+            console.log(arr.__proto__.__proto__);
+            console.log(arr.__proto__.__proto__.__proto__);
+
+            // arr.__proto__ = null;
+            arr.push(4);
+
+            // proto chain , if a property is not found in the current object
+            // the engine goes through proto chain until it reaches the last parrent
+            base = {
+                name: "John",
+                age:  33,
+                printMe: function () {
+                    console.log(this.name+ " is "+this.age+" years old");
+                }
+            };
+
+            base.printMe();
+
+            derived = {
+                name: "Doe",
+                age:  21
+            };
+
+            //You should NEVER do this 
+            //Just to understand a principle
+            derived.__proto__ = base;
+            //Although object "dervied" doesn't have a member
+            //named printMe , it can call it because the engine will
+            //go down on proto chain until it hits the "base" object
+            //where "printMe" is defined
+            derived.printMe();
+
+
+            //Example : All the default array methods called from the 
+            //parent object,  __proto__ 
+
+
+
+
+
+        </script>
+    </body>
+</html>

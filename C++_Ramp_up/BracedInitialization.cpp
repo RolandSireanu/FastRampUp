@@ -9,6 +9,14 @@ int y = 2;
 int z {2};
 
 
+//Every object of a type with all members declared as public can be 
+//initialized like this 
+// A a = {2,2};
+class A {
+    public:
+        int a;
+        int b;
+};
 
 class Widget
 {
@@ -47,7 +55,7 @@ std::atomic<int> ati{0};        //This is fine
 //If the value of an expr in braced initialization isn't guaranteed to be expressible
 //by the type of the object beeing initialized , the code will not compile.
 
-//int var {2.2+3.2};
+//int var {2.2+3.2};    //This doesn't compile !
 int var = 2.2+3.3;      //This compiles , this type of initialization doesn't check 
                         //for narrowing conversions because would break too much legacy
                         // code. 

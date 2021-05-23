@@ -2,7 +2,7 @@
 #include <vector>
 
 //Templates generate code at compilee time based on the code usage 
-//They can have two types of arguments , type and value 
+//It can have two types of arguments , type and value 
 template<typename T , int i>
 void prt(T arg)
 {

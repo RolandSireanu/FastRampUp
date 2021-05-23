@@ -1,3 +1,5 @@
+#include <string>
+#include <iostream>
 
 class A {
 
@@ -9,7 +11,29 @@ class A {
 };
 
 
+//Inner classes has access to private members outter class
+class Animal {
+    public:
+    class InnerAnimal {
+
+        public :
+            void tellMeAnimalsName(const Animal& a) {
+                std::cout << a.name << std::endl;
+            }
+    };
+
+    private:
+    std::string name = "Dixi";
+
+};
+
+
 int main()
 {
+
+    Animal a;
+    Animal::InnerAnimal ia;
+    ia.tellMeAnimalsName(a);
+
     return 0;
 }

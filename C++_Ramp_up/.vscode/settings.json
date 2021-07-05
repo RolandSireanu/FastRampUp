@@ -1,6 +1,10 @@
 {
     "files.associations": {
         "chrono": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "initializer_list": "cpp",
+        "__split_buffer": "cpp",
+        "list": "cpp",
+        "vector": "cpp"
     }
 }

@@ -62,6 +62,7 @@ void normalize(Buffer&& arg)
 
 }
 
+
 auto f = [](auto&& arg){
     return Buffer(forward<decltype(arg)>(arg));
 };
@@ -100,6 +101,8 @@ int main()
 
     //Valid lambda syntax !!! 
     [](){ cout << "hha" << endl; }();
+
+
 
     return 0;
 }

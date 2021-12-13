@@ -1,0 +1,4 @@
+
+
+def tellMeSomethingFunny():
+    return "DEADBEAFF";

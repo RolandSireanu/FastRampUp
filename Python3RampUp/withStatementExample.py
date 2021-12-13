@@ -2,9 +2,6 @@
 # "with v" means v.__enter__()
 # "with v as f" means f = f.__enter__()
 
-
-
-
 class Component :
 
     def __init__(self, name):
@@ -58,6 +55,28 @@ with Indenter() as ind:
         #ind.__enter__()
         with ind:
             ind.print("Far away")
+
+
+# =========== Context manager with contextlib ===============
+
+from contextlib import contextmanager
+
+@contextmanager
+def openFileAt(path):
+    try:
+        f = open(path, 'r');
+        yield f;
+    except OSError:
+        print("We have an os error");
+    finally:
+        print("Closing file");
+        f.close();
+
+with openFileAt("./GIL") as myFile :
+    firstline = myFile.readline();
+    print(firstline);
+
+
 
 
 

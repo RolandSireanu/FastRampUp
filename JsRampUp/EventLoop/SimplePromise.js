@@ -23,12 +23,22 @@ var p = new Promise(function(resolve,reject){
     }
 });
 
-//.then function is executed only if p gets resolved
+//".then" function is executed only if p gets resolved
 //Likewise , if p is rejected , .catch method will be executed
 p.then(function (result){
     console.log(result)
 }).catch(function (result){
     console.log("Rejectd:"+result);
 });
+
+//.then function can take 2 callback arguments, one for succesfully resolved promises ,
+//and one for rejected promises
+p.then((result) => {
+    console.log("Promise resolved with success ");
+},
+        (result) => {
+    console.log("Promise rejected ");
+});
+
 
 console.log("Hello world !");

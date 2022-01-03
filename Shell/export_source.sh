@@ -13,4 +13,4 @@ VAR=25
 #If you want the var's moddifications outside :
 # In order to receive environment changes back from the script, we must SOURCE the script - this effectively runs the script within our own interactive shell, instead of spawning another shell to run it.
 
-echo New VAR value is $VAR
+echo New VAR value is $VAR.

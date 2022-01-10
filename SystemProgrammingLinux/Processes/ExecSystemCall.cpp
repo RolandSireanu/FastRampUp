@@ -8,6 +8,10 @@
 // It replaces a process image with another process image
 // The PCB remains the same (also the fdt)
 
+// there is no new process;
+// many attributes of the calling process remain unchanged (in
+// particular, its PID).  All that execve() does is arrange for an
+// existing process (the calling process) to execute a new program.
 
 int main(int argc, char* argv[])
 {

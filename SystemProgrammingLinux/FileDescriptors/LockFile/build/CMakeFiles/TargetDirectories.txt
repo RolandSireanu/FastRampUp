@@ -1,0 +1,5 @@
+/Users/sireanuroland/Work/SystemProgrammingLinux/FileDescriptors/LockFile/build/CMakeFiles/rebuild_cache.dir
+/Users/sireanuroland/Work/SystemProgrammingLinux/FileDescriptors/LockFile/build/CMakeFiles/edit_cache.dir
+/Users/sireanuroland/Work/SystemProgrammingLinux/FileDescriptors/LockFile/build/CMakeFiles/LockFile.dir
+/Users/sireanuroland/Work/SystemProgrammingLinux/FileDescriptors/LockFile/build/src/CMakeFiles/rebuild_cache.dir
+/Users/sireanuroland/Work/SystemProgrammingLinux/FileDescriptors/LockFile/build/src/CMakeFiles/edit_cache.dir

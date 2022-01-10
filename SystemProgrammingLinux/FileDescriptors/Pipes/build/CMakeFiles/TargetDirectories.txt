@@ -1,0 +1,5 @@
+/Users/sireanuroland/Work/SystemProgrammingLinux/FileDescriptors/Pipes/build/CMakeFiles/rebuild_cache.dir
+/Users/sireanuroland/Work/SystemProgrammingLinux/FileDescriptors/Pipes/build/CMakeFiles/edit_cache.dir
+/Users/sireanuroland/Work/SystemProgrammingLinux/FileDescriptors/Pipes/build/CMakeFiles/Pipes.dir
+/Users/sireanuroland/Work/SystemProgrammingLinux/FileDescriptors/Pipes/build/src/CMakeFiles/rebuild_cache.dir
+/Users/sireanuroland/Work/SystemProgrammingLinux/FileDescriptors/Pipes/build/src/CMakeFiles/edit_cache.dir

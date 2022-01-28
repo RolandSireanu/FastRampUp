@@ -65,3 +65,4 @@ for n in range(1,101):
         if(sum(combination) == 100):
             make_100.add(combination)
 print("There are :"+str(len(make_100)) + " ways to make 100$")
+    

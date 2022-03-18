@@ -27,4 +27,23 @@ d = Derived(22)
 print(d.whoAmI())
 print(d.test())
 
+# Multiple inheritance and the diamond problem 
 
+class Parent1:
+    def howToTalk(self):
+        print("Talk like parent 1")
+
+class Parent2:
+    def howToTalk(self):
+        print("Talk like parent 2")
+
+
+class Toddler(Parent1, Parent2):
+    def __init__(self):
+        pass
+
+t = Toddler();
+
+#Diamon problem = the toddler doesn't know how to talk, like parent1 or parent2 
+#Python resolves this by MRO (method resolution order), by order of classes in inheritance list
+t.howToTalk()   #"Talk like parent 1"

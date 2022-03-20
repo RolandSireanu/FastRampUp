@@ -5,6 +5,11 @@ import ipdb
 # https://docs.python.org/3.6/library/itertools.html#itertools-recipes
 # https://realpython.com/python-itertools/
 
+# The itertools module implements a number of iterator building blocks.
+# Together they form an iterators algebra 
+# Loosely speaking, this means that the functions in itertools “operate” on iterators to produce more complex iterators.
+# For example zip function :
+
 #  built-in zip() function, which takes any number of iterables as arguments and returns an iterator over tuples of their corresponding elements:
 # Under the hood, the zip() function works, in essence, by calling iter() on each of its arguments, then advancing each iterator returned by iter() with next() and aggregating the results into tuples. The iterator returned by zip() iterates over these tuples
 # Zip stops aggregating elements when the shortest iterable passed to its exhausted.

@@ -34,6 +34,7 @@ class Parent1:
         print("Talk like parent 1")
 
 class Parent2:
+    name = "John"
     def howToTalk(self):
         print("Talk like parent 2")
 
@@ -47,3 +48,13 @@ t = Toddler();
 #Diamon problem = the toddler doesn't know how to talk, like parent1 or parent2 
 #Python resolves this by MRO (method resolution order), by order of classes in inheritance list
 t.howToTalk()   #"Talk like parent 1"
+
+#[ The MRO for Toddler class is = Toddler, Parent1, Parent2, Object]
+print(Toddler.__mro__)
+
+# This should look for "name" variable in MRO order => Parent2.name
+# should gets printed
+print(t.name)
+
+# Access members from parent classes
+print(super(Toddler, t).name)

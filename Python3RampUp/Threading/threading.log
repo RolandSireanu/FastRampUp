@@ -1,0 +1,256 @@
+2022-03-25 16:33:47,240 - Thread-1 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,241 - Thread-1 - DEBUG - total = 1
+2022-03-25 16:33:47,241 - Thread-1 - DEBUG - Lock released
+2022-03-25 16:33:47,241 - Thread-1 - DEBUG - total = 2
+2022-03-25 16:33:47,241 - Thread-2 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,241 - Thread-2 - DEBUG - total = 3
+2022-03-25 16:33:47,241 - Thread-2 - DEBUG - Lock released
+2022-03-25 16:33:47,241 - Thread-2 - DEBUG - total = 4
+2022-03-25 16:33:47,241 - Thread-3 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,241 - Thread-3 - DEBUG - total = 5
+2022-03-25 16:33:47,241 - Thread-3 - DEBUG - Lock released
+2022-03-25 16:33:47,241 - Thread-3 - DEBUG - total = 6
+2022-03-25 16:33:47,241 - Thread-4 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,241 - Thread-4 - DEBUG - total = 7
+2022-03-25 16:33:47,241 - Thread-4 - DEBUG - Lock released
+2022-03-25 16:33:47,241 - Thread-4 - DEBUG - total = 8
+2022-03-25 16:33:47,241 - Thread-5 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,241 - Thread-5 - DEBUG - total = 9
+2022-03-25 16:33:47,241 - Thread-5 - DEBUG - Lock released
+2022-03-25 16:33:47,242 - Thread-5 - DEBUG - total = 10
+2022-03-25 16:33:47,242 - Thread-6 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,242 - Thread-6 - DEBUG - total = 11
+2022-03-25 16:33:47,242 - Thread-6 - DEBUG - Lock released
+2022-03-25 16:33:47,242 - Thread-6 - DEBUG - total = 12
+2022-03-25 16:33:47,242 - Thread-7 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,242 - Thread-7 - DEBUG - total = 13
+2022-03-25 16:33:47,242 - Thread-7 - DEBUG - Lock released
+2022-03-25 16:33:47,242 - Thread-7 - DEBUG - total = 14
+2022-03-25 16:33:47,242 - Thread-8 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,242 - Thread-8 - DEBUG - total = 15
+2022-03-25 16:33:47,242 - Thread-8 - DEBUG - Lock released
+2022-03-25 16:33:47,242 - Thread-8 - DEBUG - total = 16
+2022-03-25 16:33:47,242 - Thread-9 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,242 - Thread-9 - DEBUG - total = 17
+2022-03-25 16:33:47,242 - Thread-9 - DEBUG - Lock released
+2022-03-25 16:33:47,242 - Thread-9 - DEBUG - total = 18
+2022-03-25 16:33:47,242 - Thread-10 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,243 - Thread-10 - DEBUG - total = 19
+2022-03-25 16:33:47,243 - Thread-10 - DEBUG - Lock released
+2022-03-25 16:33:47,243 - Thread-10 - DEBUG - total = 20
+2022-03-25 16:33:47,243 - Thread-11 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,243 - Thread-11 - DEBUG - total = 21
+2022-03-25 16:33:47,243 - Thread-11 - DEBUG - Lock released
+2022-03-25 16:33:47,243 - Thread-11 - DEBUG - total = 22
+2022-03-25 16:33:47,243 - Thread-12 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,243 - Thread-12 - DEBUG - total = 23
+2022-03-25 16:33:47,243 - Thread-12 - DEBUG - Lock released
+2022-03-25 16:33:47,243 - Thread-12 - DEBUG - total = 24
+2022-03-25 16:33:47,243 - Thread-13 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,243 - Thread-13 - DEBUG - total = 25
+2022-03-25 16:33:47,243 - Thread-13 - DEBUG - Lock released
+2022-03-25 16:33:47,243 - Thread-13 - DEBUG - total = 26
+2022-03-25 16:33:47,243 - Thread-14 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,243 - Thread-14 - DEBUG - total = 27
+2022-03-25 16:33:47,243 - Thread-14 - DEBUG - Lock released
+2022-03-25 16:33:47,243 - Thread-14 - DEBUG - total = 28
+2022-03-25 16:33:47,243 - Thread-15 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,243 - Thread-15 - DEBUG - total = 29
+2022-03-25 16:33:47,243 - Thread-15 - DEBUG - Lock released
+2022-03-25 16:33:47,243 - Thread-15 - DEBUG - total = 30
+2022-03-25 16:33:47,243 - Thread-16 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,243 - Thread-16 - DEBUG - total = 31
+2022-03-25 16:33:47,243 - Thread-16 - DEBUG - Lock released
+2022-03-25 16:33:47,243 - Thread-16 - DEBUG - total = 32
+2022-03-25 16:33:47,244 - Thread-17 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,244 - Thread-17 - DEBUG - total = 33
+2022-03-25 16:33:47,244 - Thread-17 - DEBUG - Lock released
+2022-03-25 16:33:47,244 - Thread-17 - DEBUG - total = 34
+2022-03-25 16:33:47,244 - Thread-18 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,244 - Thread-18 - DEBUG - total = 35
+2022-03-25 16:33:47,244 - Thread-18 - DEBUG - Lock released
+2022-03-25 16:33:47,244 - Thread-18 - DEBUG - total = 36
+2022-03-25 16:33:47,244 - Thread-19 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,244 - Thread-19 - DEBUG - total = 37
+2022-03-25 16:33:47,244 - Thread-19 - DEBUG - Lock released
+2022-03-25 16:33:47,244 - Thread-19 - DEBUG - total = 38
+2022-03-25 16:33:47,244 - Thread-20 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,244 - Thread-20 - DEBUG - total = 39
+2022-03-25 16:33:47,244 - Thread-20 - DEBUG - Lock released
+2022-03-25 16:33:47,244 - Thread-20 - DEBUG - total = 40
+2022-03-25 16:33:47,244 - Thread-30 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,244 - Thread-30 - DEBUG - total = 41
+2022-03-25 16:33:47,244 - Thread-30 - DEBUG - Lock released
+2022-03-25 16:33:47,244 - Thread-30 - DEBUG - total = 42
+2022-03-25 16:33:47,244 - Thread-22 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,244 - Thread-22 - DEBUG - total = 43
+2022-03-25 16:33:47,244 - Thread-22 - DEBUG - Lock released
+2022-03-25 16:33:47,244 - Thread-22 - DEBUG - total = 44
+2022-03-25 16:33:47,244 - Thread-23 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,245 - Thread-23 - DEBUG - total = 45
+2022-03-25 16:33:47,245 - Thread-23 - DEBUG - Lock released
+2022-03-25 16:33:47,245 - Thread-23 - DEBUG - total = 46
+2022-03-25 16:33:47,245 - Thread-24 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,245 - Thread-24 - DEBUG - total = 47
+2022-03-25 16:33:47,245 - Thread-24 - DEBUG - Lock released
+2022-03-25 16:33:47,245 - Thread-24 - DEBUG - total = 48
+2022-03-25 16:33:47,245 - Thread-25 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,245 - Thread-25 - DEBUG - total = 49
+2022-03-25 16:33:47,245 - Thread-25 - DEBUG - Lock released
+2022-03-25 16:33:47,245 - Thread-25 - DEBUG - total = 50
+2022-03-25 16:33:47,245 - Thread-26 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,245 - Thread-26 - DEBUG - total = 51
+2022-03-25 16:33:47,245 - Thread-26 - DEBUG - Lock released
+2022-03-25 16:33:47,245 - Thread-26 - DEBUG - total = 52
+2022-03-25 16:33:47,245 - Thread-27 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,245 - Thread-27 - DEBUG - total = 53
+2022-03-25 16:33:47,245 - Thread-27 - DEBUG - Lock released
+2022-03-25 16:33:47,245 - Thread-27 - DEBUG - total = 54
+2022-03-25 16:33:47,245 - Thread-28 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,245 - Thread-28 - DEBUG - total = 55
+2022-03-25 16:33:47,245 - Thread-28 - DEBUG - Lock released
+2022-03-25 16:33:47,245 - Thread-28 - DEBUG - total = 56
+2022-03-25 16:33:47,245 - Thread-29 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,245 - Thread-29 - DEBUG - total = 57
+2022-03-25 16:33:47,245 - Thread-29 - DEBUG - Lock released
+2022-03-25 16:33:47,245 - Thread-29 - DEBUG - total = 58
+2022-03-25 16:33:47,245 - Thread-31 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,245 - Thread-31 - DEBUG - total = 59
+2022-03-25 16:33:47,245 - Thread-31 - DEBUG - Lock released
+2022-03-25 16:33:47,245 - Thread-31 - DEBUG - total = 60
+2022-03-25 16:33:47,245 - Thread-21 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,245 - Thread-21 - DEBUG - total = 61
+2022-03-25 16:33:47,246 - Thread-21 - DEBUG - Lock released
+2022-03-25 16:33:47,246 - Thread-21 - DEBUG - total = 62
+2022-03-25 16:33:47,246 - Thread-32 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,246 - Thread-32 - DEBUG - total = 63
+2022-03-25 16:33:47,246 - Thread-32 - DEBUG - Lock released
+2022-03-25 16:33:47,246 - Thread-32 - DEBUG - total = 64
+2022-03-25 16:33:47,246 - Thread-51 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,246 - Thread-51 - DEBUG - total = 65
+2022-03-25 16:33:47,246 - Thread-51 - DEBUG - Lock released
+2022-03-25 16:33:47,246 - Thread-51 - DEBUG - total = 66
+2022-03-25 16:33:47,246 - Thread-34 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,246 - Thread-34 - DEBUG - total = 67
+2022-03-25 16:33:47,246 - Thread-34 - DEBUG - Lock released
+2022-03-25 16:33:47,246 - Thread-34 - DEBUG - total = 68
+2022-03-25 16:33:47,246 - Thread-35 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,246 - Thread-35 - DEBUG - total = 69
+2022-03-25 16:33:47,246 - Thread-35 - DEBUG - Lock released
+2022-03-25 16:33:47,246 - Thread-35 - DEBUG - total = 70
+2022-03-25 16:33:47,246 - Thread-60 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,246 - Thread-60 - DEBUG - total = 71
+2022-03-25 16:33:47,247 - Thread-60 - DEBUG - Lock released
+2022-03-25 16:33:47,247 - Thread-60 - DEBUG - total = 72
+2022-03-25 16:33:47,247 - Thread-37 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,247 - Thread-37 - DEBUG - total = 73
+2022-03-25 16:33:47,247 - Thread-37 - DEBUG - Lock released
+2022-03-25 16:33:47,247 - Thread-37 - DEBUG - total = 74
+2022-03-25 16:33:47,247 - Thread-38 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,247 - Thread-38 - DEBUG - total = 75
+2022-03-25 16:33:47,247 - Thread-38 - DEBUG - Lock released
+2022-03-25 16:33:47,247 - Thread-38 - DEBUG - total = 76
+2022-03-25 16:33:47,247 - Thread-39 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,247 - Thread-39 - DEBUG - total = 77
+2022-03-25 16:33:47,247 - Thread-39 - DEBUG - Lock released
+2022-03-25 16:33:47,247 - Thread-39 - DEBUG - total = 78
+2022-03-25 16:33:47,247 - Thread-40 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,247 - Thread-40 - DEBUG - total = 79
+2022-03-25 16:33:47,247 - Thread-40 - DEBUG - Lock released
+2022-03-25 16:33:47,247 - Thread-40 - DEBUG - total = 80
+2022-03-25 16:33:47,247 - Thread-41 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,247 - Thread-41 - DEBUG - total = 81
+2022-03-25 16:33:47,247 - Thread-41 - DEBUG - Lock released
+2022-03-25 16:33:47,247 - Thread-41 - DEBUG - total = 82
+2022-03-25 16:33:47,247 - Thread-42 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,247 - Thread-42 - DEBUG - total = 83
+2022-03-25 16:33:47,247 - Thread-42 - DEBUG - Lock released
+2022-03-25 16:33:47,247 - Thread-42 - DEBUG - total = 84
+2022-03-25 16:33:47,247 - Thread-43 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,247 - Thread-43 - DEBUG - total = 85
+2022-03-25 16:33:47,247 - Thread-43 - DEBUG - Lock released
+2022-03-25 16:33:47,247 - Thread-43 - DEBUG - total = 86
+2022-03-25 16:33:47,247 - Thread-44 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,247 - Thread-44 - DEBUG - total = 87
+2022-03-25 16:33:47,247 - Thread-44 - DEBUG - Lock released
+2022-03-25 16:33:47,247 - Thread-44 - DEBUG - total = 88
+2022-03-25 16:33:47,247 - Thread-45 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,247 - Thread-45 - DEBUG - total = 89
+2022-03-25 16:33:47,247 - Thread-45 - DEBUG - Lock released
+2022-03-25 16:33:47,247 - Thread-45 - DEBUG - total = 90
+2022-03-25 16:33:47,247 - Thread-46 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,248 - Thread-46 - DEBUG - total = 91
+2022-03-25 16:33:47,248 - Thread-46 - DEBUG - Lock released
+2022-03-25 16:33:47,248 - Thread-46 - DEBUG - total = 92
+2022-03-25 16:33:47,248 - Thread-47 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,248 - Thread-47 - DEBUG - total = 93
+2022-03-25 16:33:47,248 - Thread-47 - DEBUG - Lock released
+2022-03-25 16:33:47,248 - Thread-47 - DEBUG - total = 94
+2022-03-25 16:33:47,248 - Thread-48 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,248 - Thread-48 - DEBUG - total = 95
+2022-03-25 16:33:47,248 - Thread-48 - DEBUG - Lock released
+2022-03-25 16:33:47,248 - Thread-48 - DEBUG - total = 96
+2022-03-25 16:33:47,248 - Thread-49 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,248 - Thread-49 - DEBUG - total = 97
+2022-03-25 16:33:47,248 - Thread-49 - DEBUG - Lock released
+2022-03-25 16:33:47,248 - Thread-49 - DEBUG - total = 98
+2022-03-25 16:33:47,248 - Thread-50 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,248 - Thread-50 - DEBUG - total = 99
+2022-03-25 16:33:47,248 - Thread-50 - DEBUG - Lock released
+2022-03-25 16:33:47,248 - Thread-50 - DEBUG - total = 100
+2022-03-25 16:33:47,248 - Thread-33 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,248 - Thread-33 - DEBUG - total = 101
+2022-03-25 16:33:47,248 - Thread-33 - DEBUG - Lock released
+2022-03-25 16:33:47,248 - Thread-33 - DEBUG - total = 102
+2022-03-25 16:33:47,248 - Thread-52 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,248 - Thread-52 - DEBUG - total = 103
+2022-03-25 16:33:47,248 - Thread-52 - DEBUG - Lock released
+2022-03-25 16:33:47,248 - Thread-52 - DEBUG - total = 104
+2022-03-25 16:33:47,248 - Thread-53 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,248 - Thread-53 - DEBUG - total = 105
+2022-03-25 16:33:47,248 - Thread-53 - DEBUG - Lock released
+2022-03-25 16:33:47,248 - Thread-53 - DEBUG - total = 106
+2022-03-25 16:33:47,248 - Thread-54 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,248 - Thread-54 - DEBUG - total = 107
+2022-03-25 16:33:47,248 - Thread-54 - DEBUG - Lock released
+2022-03-25 16:33:47,248 - Thread-54 - DEBUG - total = 108
+2022-03-25 16:33:47,248 - Thread-55 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,248 - Thread-55 - DEBUG - total = 109
+2022-03-25 16:33:47,248 - Thread-55 - DEBUG - Lock released
+2022-03-25 16:33:47,248 - Thread-55 - DEBUG - total = 110
+2022-03-25 16:33:47,248 - Thread-56 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,248 - Thread-56 - DEBUG - total = 111
+2022-03-25 16:33:47,248 - Thread-56 - DEBUG - Lock released
+2022-03-25 16:33:47,248 - Thread-56 - DEBUG - total = 112
+2022-03-25 16:33:47,248 - Thread-57 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,248 - Thread-57 - DEBUG - total = 113
+2022-03-25 16:33:47,248 - Thread-57 - DEBUG - Lock released
+2022-03-25 16:33:47,248 - Thread-57 - DEBUG - total = 114
+2022-03-25 16:33:47,248 - Thread-58 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,248 - Thread-58 - DEBUG - total = 115
+2022-03-25 16:33:47,249 - Thread-58 - DEBUG - Lock released
+2022-03-25 16:33:47,249 - Thread-58 - DEBUG - total = 116
+2022-03-25 16:33:47,249 - Thread-59 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,249 - Thread-59 - DEBUG - total = 117
+2022-03-25 16:33:47,249 - Thread-59 - DEBUG - Lock released
+2022-03-25 16:33:47,249 - Thread-59 - DEBUG - total = 118
+2022-03-25 16:33:47,249 - Thread-36 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,249 - Thread-36 - DEBUG - total = 119
+2022-03-25 16:33:47,249 - Thread-36 - DEBUG - Lock released
+2022-03-25 16:33:47,249 - Thread-36 - DEBUG - total = 120
+2022-03-25 16:33:47,249 - Thread-61 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,249 - Thread-61 - DEBUG - total = 121
+2022-03-25 16:33:47,249 - Thread-61 - DEBUG - Lock released
+2022-03-25 16:33:47,249 - Thread-61 - DEBUG - total = 122
+2022-03-25 16:33:47,249 - Thread-62 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,249 - Thread-62 - DEBUG - total = 123
+2022-03-25 16:33:47,249 - Thread-62 - DEBUG - Lock released
+2022-03-25 16:33:47,249 - Thread-62 - DEBUG - total = 124
+2022-03-25 16:33:47,249 - Thread-63 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,249 - Thread-63 - DEBUG - total = 125
+2022-03-25 16:33:47,249 - Thread-63 - DEBUG - Lock released
+2022-03-25 16:33:47,249 - Thread-63 - DEBUG - total = 126
+2022-03-25 16:33:47,249 - Thread-64 - DEBUG - Lock acquired 
+2022-03-25 16:33:47,249 - Thread-64 - DEBUG - total = 127
+2022-03-25 16:33:47,249 - Thread-64 - DEBUG - Lock released
+2022-03-25 16:33:47,249 - Thread-64 - DEBUG - total = 128

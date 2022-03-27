@@ -9,18 +9,23 @@ class Component :
         self.fileName = name;
 
     def __enter__(self):
+        print("__enter__ called ");
         self.fileDescriptor = open(self.fileName,"w");
         return self.fileDescriptor;
 
     def __exit__(self, exc_type, exc_val, exc_tb):
+        print("__exit__ called")
         if(self.fileDescriptor):
             self.fileDescriptor.close()
 
 
 # c = Component("log")
 # f = c.__enter__();
+print("preparing for with ")
 with Component("log") as f:
+    print("Inside with statement")
     f.write("Blablabla");
+print("Outside with statement")
 # c.__exit__()
 
 
@@ -75,10 +80,3 @@ def openFileAt(path):
 with openFileAt("./GIL") as myFile :
     firstline = myFile.readline();
     print(firstline);
-
-
-
-
-
-
-

@@ -35,11 +35,11 @@ int main()
     }
     else
     {
-        //std::get<1>(value) , and threat the error
+        //std::get<1>(value) , and handle the error
         cout << " Error ! " << endl;
     }
 
-    // A better way to access the return value is with get_if
+    // A better way to access the return value is using get_if template function
 
     auto ptr = get_if<string>(&value);
     if(ptr != nullptr)

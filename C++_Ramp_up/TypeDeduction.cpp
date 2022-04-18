@@ -6,10 +6,19 @@
 //For printing the deduced type at runtime , the best option is : <boost/type_index.hpp>
 // type_info is not reliable
 
+
+// ========================== Info generala ============================
+//  T este tipul argumentului fara referinta daca exista
+//  ParamType este T concatenat cu & sau cu && 
+// =====================================================================
+
+
 //Case 1 : ParamType is a reference or a pointer type
-//         T is ignoring reference part but is keeping the const 
-//         T is ignoring const if it present in ParamType decl
-//         ParamType is concat the adorm
+//      -> daca tipul expresiei este referinta, in T se ignora referinta
+//      -> se concateneaza T cu & 
+
+
+
 template<typename T>
 void c1(T& arg)
 {}
@@ -24,14 +33,14 @@ void c111(T* arg)
 
 
 //Case 2 : ParamType is a universal reference
-//         If a rvalue will be send as arg , T = type and ParamType = T&&
-//         If a lvalue will be send as arg , T takes ref and const part
+//      Daca tipul expresiei este lvalue , ParamType este egal cu T (T concatenat cu &)
+//      Daca tipul expresiei este rvalue , 
 template<typename T>
 void c2(T&& arg)
 {}
 
 //Case 3 : ParamType is neither a pointer nor a reference
-//         Every const , reference or volatile will be ignored by type deduction
+//         const, volatile sau referinta sunt ignorate, T este egal cu ParamType egal cu tipul expr fara (const,ref,volatile)
 template<typename T>
 void c3(T arg)
 {}

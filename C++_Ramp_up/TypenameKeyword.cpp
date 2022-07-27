@@ -1,4 +1,4 @@
-// Short answer: Whenever referring to a nested name that is a dependent name, i.e. nested inside a template instance with unknown parameter.
+
 
 // Long answer: There are three tiers of entities in C++: values, types, and templates. 
 // All of those can have names, and the name alone doesn't tell you which tier of entity it is. 
@@ -10,6 +10,8 @@ class Container
         using value = int;
 };
 
+
+// "value" is a template parameter dependent name which could represent anything named value inside a type passed to function
 template<typename T>
 void f(T)
 {

@@ -6,8 +6,8 @@
 using namespace std;
 
 //Lambda expressions 
-//Are threated by compiler as functors .
-//For every lambda expre a class with operator () overloaded is created
+//Are threated by compiler as functors.
+//For every lambda expression a class with operator () overloaded is created
 
 //Closure class = class from which a closure is instantiated
 

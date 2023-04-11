@@ -22,6 +22,8 @@ using namespace std;
           if no exceptions will be propagating up from it. 
         - Standard Library is noexcept-aware and uses it to decide between copies and moves.
           You really want your moves to be noexcept. And if your moves use some other member functions of your class, you want those to be noexcept
+          
+    Destructors, swap functions, move operations, and default constructors should never throw.
 */
 
 

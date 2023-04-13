@@ -53,7 +53,37 @@ namespace
         cout << aComputer->ram() << endl;
     }
 
-}
+    // For small data types use passing by value to avoid the access overhead of a const ref&
+    // Check OneNote Articole for additional details
+    void f(const int&) {}
+    void f(int argument){}
+
+    // Prefare default arguments to overloads
+    //The use of default arguments can avoid code replication.
+    // BAD
+        void print(const string& s);  // use default format
+        void print(const string& s, format f);
+    //GOOD
+        void print(const string& s, format f = {});
+
+
+    // =============================== Return value ==================================================
+
+    //A return value is self-documenting, whereas a & could be either in-out or out-only and is liable to be misused.
+    //If you have multiple return values use a tuple of similar
+    vector<const int*> find_all(const vector<int>&, int x);
+
+    //Don't use const for return type, it interferes with move sematics
+    // const vector<int> compute();
+    vector<int> compute();
+
+    //Don't return T&&, it is a magnet for rvalues whose lifetime ends at the end of the function
+    // template<typename T>
+    // T&& f();
+
+
+
+}   
 
 int main()
 {

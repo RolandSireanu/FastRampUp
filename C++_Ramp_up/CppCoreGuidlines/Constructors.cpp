@@ -52,3 +52,30 @@ public:
     double mLength {235.98};
 };
 
+
+// ===========================================================================
+// Use factory function if you need virtual behavior during initialization
+// Don't call virtual function during initialization
+class BaseLaptop
+{
+public:
+    BaseLaptop()
+    {
+        // post_init() Don't call virtual function in constructors and destructors
+    }
+    virtual void post_init() = 0;
+};
+
+// Use delegating constructors to represent common actions for all constructors of a class
+class Date
+{
+public:
+    Date(int d, int m, int y) {}
+    Date(int d, int m) : Date(d,m,2023) {}
+}
+
+// Use inheriting constructors to import constructors into a derived class that does not need further explicit initialization
+class OddDate : public Date
+{
+    using Date::Date;
+};

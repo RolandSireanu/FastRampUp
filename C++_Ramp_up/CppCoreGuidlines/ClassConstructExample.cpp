@@ -11,7 +11,7 @@ namespace NN
 
 // Use STRUCT if there is no invariant
 // Don't define a class/enum and declare a variable of its type in the same statement
-class Shape
+struct Shape
 {
     int w;
     int h;
@@ -40,11 +40,26 @@ public:
     Operation& operator=(Operation const&) = delete;
 
     const Shape& shape() { return mShape; }
+    // Overload only for operations that are roughly equivalent
+    Shape shape(int offset) { return Shape{mShape.w + offset, mShape.h}; }
+    
+    // Use non-member functions for symetric operators
+    // Make operator == noexcept
+    friend bool operator==(Operation const& a, Operation const& b) noexcept { }
+
+    // Don't introduce implicit conversion, either through conversion operators or non-explicit constructors
+    // operator int() { return mShape.w + mShape.h; }       BAD
+    // explicit operator int() { ... }   GOOD
+
+
 
     // When a destructor needs to be declared just to make it virtual, it can be defined as defaulted.
     // A destructor must not fail, declare it NOEXCEPT
     // Destructor should be public and virtual
     virtual ~Operation() noexcept = default;
+
+
+
 private:
     
     // Don't make data members const or references. This makes the class not suitable for copy-assigment operator (operator=)
@@ -54,14 +69,11 @@ private:
     string mName {"no_name"};
 };
 
-// Make operator == noexcept
-bool operator==(Operation const& a, Operation const& b) noexcept {}
-
 class NeuralNetworkOperation : public Operation
 {
     // Use inheriting constructors to import constructors into a derived class that does not need further explicit initialization
     using Operation::Operation;
-}
+};
 
 // Make a function a member only if it needs direct access to the representation of a class
 // A helper function doesn't need direct access to the representation of the class, yet it is seen
@@ -69,7 +81,7 @@ class NeuralNetworkOperation : public Operation
 // obvious
 bool isShapeBigEnough(Operation const& aOperation)
 {
-    if(aOperation.shape().w > 100)
+    if(aOperation.shape.w > 100)
     {
         return true;
     }
@@ -77,9 +89,20 @@ bool isShapeBigEnough(Operation const& aOperation)
     return false;
 }
 
+
+
+// Use "using" for customization points. This is done by including the general function in the lookup for the function
+void Interchange(Operation& a, Operation& b)
+{
+    using std::swap;
+    //If it exists, use the specific swap implementation for Operation, otherwise use the std::swap
+    swap(a, b);
+}
+
 }
 
 int main()
 {
- 
+    NN::Operation op1, op2;
+    // op1 = op1 + op2;
 }

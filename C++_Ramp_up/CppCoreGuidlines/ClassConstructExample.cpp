@@ -8,6 +8,17 @@ using namespace std;
 
 namespace NN
 {
+    // Prefer enumeration over macros
+    // Prefer enum class over plain enums, traditional enums convert to int too easily
+    // Don’t use ALL_CAPS for enumerators
+    // Avoid unnamed enumerations
+    // Specify the underlying type of an enumeration only when necessary
+
+    enum class OperationType
+    {
+        // Specify enumerator values only when necessary
+        conv=1, maxPooling=2, relu=3
+    };
 
 // Use STRUCT if there is no invariant
 // Don't define a class/enum and declare a variable of its type in the same statement
@@ -42,6 +53,9 @@ public:
     const Shape& shape() { return mShape; }
     // Overload only for operations that are roughly equivalent
     Shape shape(int offset) { return Shape{mShape.w + offset, mShape.h}; }
+
+    // Make interfaces precise and strongly typed, BAD example area(int aWidth, int aHeight)
+    int area(Shape const& aArg) { return aArg.h * aArg.w; }
     
     // Use non-member functions for symetric operators
     // Make operator == noexcept

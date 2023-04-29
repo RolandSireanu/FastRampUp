@@ -65,6 +65,13 @@ public:
     // operator int() { return mShape.w + mShape.h; }       BAD
     // explicit operator int() { ... }   GOOD
 
+    //If you don't use the smart pointer capabilities of arg, just take a raw pointer instead
+    //Make sure arg it is managed by a smart pointer
+    //DON'T CALL NEW OR DELETE ANYWHRERE IN YOUR CODE
+    void f(int* arg)
+    {
+
+    }
 
 
     // When a destructor needs to be declared just to make it virtual, it can be defined as defaulted.

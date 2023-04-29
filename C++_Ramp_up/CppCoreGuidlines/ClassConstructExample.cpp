@@ -17,7 +17,7 @@ namespace NN
     enum class OperationType
     {
         // Specify enumerator values only when necessary
-        conv=1, maxPooling=2, relu=3
+        conv, maxPooling, relu
     };
 
 // Use STRUCT if there is no invariant

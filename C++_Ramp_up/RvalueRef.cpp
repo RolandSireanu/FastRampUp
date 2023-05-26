@@ -136,6 +136,17 @@
         return s;
     }
 
+    Buffer getBuffer() 
+    {
+        Buffer tempA;
+        Buffer tempB;
+
+        if(true)
+            return tempA;
+        else
+            return tempB;
+    }
+
     int main()
     {
 
@@ -163,5 +174,11 @@
         // cout << type_label(x) << endl;
         // cout << type_label(std::move(x)) << endl;
         print_type(999);
+
+        //Does the temp reference a deallocated memory?
+        // No, getBuffer receives memory from current stack(stack of main) to build the result there
+        // The "temp" reference just reference that memory location => All good
+        Buffer const& temp = getBuffer();
+
         return 0;
     }

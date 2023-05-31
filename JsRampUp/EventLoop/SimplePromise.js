@@ -5,7 +5,7 @@
 //Promise is a proxy for a value not necessary known when the promsie is created
 
 //The async method returns a promise to supply the value at a later time
-//The value return by a promise is value of arg passed to resolve , reject
+//The value return by a promise is the arguments of resolve or reject
 
 var p = new Promise(function(resolve,reject){
 

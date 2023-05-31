@@ -1,0 +1,5 @@
+In js Global means not inside a function
+JS engines creates in the global environment two objects this and window
+
+When you create variables and functions outside of functions those are attached
+to global object "window".

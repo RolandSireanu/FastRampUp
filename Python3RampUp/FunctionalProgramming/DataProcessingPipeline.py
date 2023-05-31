@@ -28,8 +28,6 @@ def size_filter(files):
 # sum function will consume the entire size generator, which will start consuming files generator and so on
 def sum_filter(size):
         yield sum(size)
-    
-
 
 filters = [
     search_filter,

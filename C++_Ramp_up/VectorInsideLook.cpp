@@ -6,8 +6,6 @@
 using namespace std;
 
 
-
-
 template<class T, T v> struct my_integral_constant {static constexpr T value = v;};
 template<bool v> using my_bool_constant = my_integral_constant<bool, v>;
 using my_true_type = my_bool_constant<true>;
@@ -101,11 +99,35 @@ public:
     using value_type = T;
     using reference_type = T&;
     using const_reference = const T&;
-    using pointer = unique_ptr<value_type[]>;
+    using pointer = T*;
     using size_type = size_t;
     static constexpr int32_t scaleFactor = 2;
+    
+    //The Iterator should be copy-constructible/assignable and swappable
+    class Iterator
+    {
+    public:
+        using iterator_category = std::forward_iterator_tag;
+        using difference_type = std::ptrdiff_t;
+        using value_type = T;
+        using pointer = T*;
+        using reference = T&;
 
-    MyVector(std::initializer_list<value_type> aElements) : mPtrData{my_make_unique<value_type[]>(aElements.size()*scaleFactor)}
+        Iterator(pointer aData) : mData{aData}
+        {}
+
+        reference operator*() { return *mData; }
+        pointer operator->()  { return mData;  }
+        Iterator& operator++() { mData++; return *this; }
+        Iterator& operator++(int) {Iterator& orig = *this; ++(*this); return orig; }
+
+        friend bool operator==(const Iterator& lhs, const Iterator& rhs) { return lhs.mData == rhs.mData; }
+        friend bool operator!=(const Iterator& lhs, const Iterator& rhs) { return lhs.mData != rhs.mData; }
+    private:
+        pointer mData;
+    };
+
+    MyVector(std::initializer_list<value_type> aElements) : mPtrData{}
     {
         int32_t index {0};
         for(const auto& e : aElements)
@@ -115,7 +137,7 @@ public:
         }
     }
 
-    explicit MyVector(size_type aCount, const_reference aElement) :mPtrData{my_make_unique<value_type[]>(aCount*scaleFactor)}
+    explicit MyVector(size_type aCount, const_reference aElement) : mSize{aCount}, mPtrData{mAllocator.allocate(aCount*scaleFactor)}
     {
         for(int i{0}; i<aCount; i++)
         {
@@ -123,7 +145,7 @@ public:
         }
     }
 
-    template<typename InputIt, typename = enable_if_t<my_is_iterator<InputIt>::value>>
+    template<typename InputIt, typename = typename my_enable_if<my_is_iterator<InputIt>::value>::type>
     MyVector(InputIt first, InputIt last)
     {
         int32_t index {0};
@@ -139,18 +161,33 @@ public:
         return mPtrData[aPos];
     }
 
+    Iterator begin() { return Iterator{mPtrData}; }
+    Iterator end() { return Iterator{mPtrData + mSize}; }
+
+    ~MyVector()
+    {
+        mAllocator.deallocate(mPtrData, mSize);
+    }
+
+private:
+    Allocator mAllocator{};
     pointer mPtrData;
+    size_type mSize {0};
 };
 
 int main()
 {
     MyVector m(10,10);
-    MyVector m2{1,2,3,4,5};
-    m2[1] = m[2];
-    std::cout << m2[1] << std::endl;
+    m[0] = 12;
+    std::cout << m[0] << " , " << m[1] << " , " << m[2] << std::endl;
+    // MyVector m2{1,2,3,4,5};
+    // m2[1] = m[2];
 
-    array<int,5> a {10,20,30,40,50};
-    MyVector<int> m3(a.begin(), a.end());
+    // array<int,5> a {10,20,30,40,50};
+    // MyVector<int> m3(a.begin(), a.end());
+
+    for(const auto& e : m)
+        std::cout << e << std::endl;
 
 
     return 0;

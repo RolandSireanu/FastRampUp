@@ -1,52 +1,72 @@
 #include <iostream>
-#include <vector>
-#include <algorithm>
 using namespace std;
 
-int     addNumbers(int a, int b) { cout << "addNumbers(int,int)" << endl; return a+b; }
-float   addNumbers(float a, float b) { cout << "addNumbers(float,float)" << endl; return a + b; }
-double  addNumbers(double a, double b) { cout <<"addNumbers(double, double)" << endl; return a+b; }
-int     addNumbers(vector<int> a, vector<int> b) { return 0; }
+// Overload resolution process:
+// As a main guidline, how the candidates are ranked inside the overload set:
+// 1. The non template function are choosen first
+// 2. The specialization are choosen second (even for lvalue rvalue)
+// 3. Next are the templates (const T& binds to lvalue and T&& bind only to rvalues)
 
-namespace 
+class Animal
 {
-    int addNumbers(int a, int b) { cout<< "namespace addNumbers(int,int)"<< endl; return a+b;}
-
-    int mathOperation(int a, int b) 
-    {
-        cout << "namespace mathOperation(int,int)" << endl;
-        // ==================================== Overload resolution process: =================================
-        // ======== Step_1 Name lookup ======
-        // name lookup found the following function declarations and form the list of candidates (overload set):
-        // - int addNumbers(int, int)
-        // - double addNumbers(double, double)
-        // - float addNumbers(float, float)
-        // - int addNumbers_internalNamespace(int, int)
-        // - int addNumbners(vector<int>, vector<int>)
-        
-        // ======== Step_2 Removing invalid candidates  ======
-        // The compiler needs to remove the invalid candidates based on the following rulles :
-        // - Number of arguments
-        // - Data type (even with implicit conversion, data type of the passed arguments can't be converted 
-        //              to match the declaration even considering implicit conversion)
-        // => The new list of candidates (vector<int> got removed because is invalid, 
-        //                                there is no implicit conversion from int to vector<int> ):
-        // - int addNumbers(int, int)
-        // - double addNumbers(double, double)
-        // - float addNumbers(float, float)
-        // - int addNumbers_internalNamespace(int, int)
-
-        // ======== Step_3 Ranking the remaining(valid) candidates  ======
-        // The process of finding a single best match
-        // The best match is int addNumbers(int a, int b) from the anonymuous namespace
-        return addNumbers(a, b);
-    }
+public:
+    Animal() {}
+    Animal(const Animal&) {}
+    Animal(Animal&&) {}
+    Animal& operator=(const Animal&) {}
+    Animal& operator=(Animal&&) {}
 };
+
+class Cage
+{
+public:
+    Cage() {}
+    Cage(const Cage&) {}
+    Cage(Cage&&) {}
+    Cage& operator=(const Cage&) {}
+    Cage& operator=(Cage&&) {}
+};
+
+class Food
+{
+public:
+    Food() {}
+    Food(const Food&) {}
+    Food(Food&&) {}
+    Food& operator=(const Food&) {}
+    Food& operator=(Food&&) {}
+};
+
+template<typename T>
+void push(T& arg) { std::cout << "template push(T&)" << std::endl;}
+
+template<typename T>
+void push(T&& arg) { std::cout << "template push(T&&)" << std::endl;}
+ 
+template<>
+void push<Animal>(Animal&&) { std::cout << "push(Animal&&)" << std::endl;}
+
+template<>
+void push<Food>(Food& arg) { std::cout << "template<> push(Food&)" << std::endl;}
+
+template<>
+void push<Cage>(Cage& arg) { std::cout << "template<> push(Cage&)" << std::endl;}
+
+void push(Cage arg) {std::cout << "push(Cage)" << std::endl;}
 
 
 int main()
 {
-    cout << mathOperation(5,4);
+    Animal a;
+    Cage c;
+    Food f;
+
+    push(a);            // template push(T&)
+    push(Animal{});     // push(Animal&&)
+    push(c);            // push(Cage)
+    push(Cage{});       // push(Cage)
+    push(f);            // template<> push(Food&)
+    push(Food{});       // template push(T&&)
 
     return 0;
 }

@@ -3,6 +3,7 @@
 #include <array>
 #include <initializer_list>
 #include <memory>
+#include <cstring>
 using namespace std;
 
 
@@ -113,9 +114,7 @@ public:
         using pointer = T*;
         using reference = T&;
 
-        Iterator(pointer aData) : mData{aData}
-        {}
-
+        Iterator(pointer aData) : mData{aData} {}
         reference operator*() { return *mData; }
         pointer operator->()  { return mData;  }
         Iterator& operator++() { mData++; return *this; }
@@ -135,14 +134,16 @@ public:
             mPtrData[index] = e;
             index++;
         }
+        mCurrentPos = index;
     }
 
-    explicit MyVector(size_type aCount, const_reference aElement) : mSize{aCount}, mPtrData{mAllocator.allocate(aCount*scaleFactor)}
+    explicit MyVector(size_type aCount, const_reference aElement) : mSize{aCount*scaleFactor}, mPtrData{mAllocator.allocate(mSize)}
     {
         for(int i{0}; i<aCount; i++)
         {
             mPtrData[i] = aElement;
         }
+        mCurrentPos = aCount;
     }
 
     template<typename InputIt, typename = typename my_enable_if<my_is_iterator<InputIt>::value>::type>
@@ -154,15 +155,36 @@ public:
             mPtrData[index] = *it;
             index++;
         }
+        mCurrentPos = index;
     }
 
-    reference_type operator[](size_type aPos)
-    {
-        return mPtrData[aPos];
-    }
-
+    reference_type operator[](size_type aPos) { return mPtrData[aPos]; }
     Iterator begin() { return Iterator{mPtrData}; }
     Iterator end() { return Iterator{mPtrData + mSize}; }
+
+    void resize(size_type aCount)
+    {
+        if(aCount > mSize)
+        {
+            pointer lTemp = mAllocator.allocate(aCount);
+
+            for(int i{0}; i<mSize; ++i)
+            {
+                lTemp[i] = std::move(mPtrData[i]);
+            }
+            delete mPtrData;
+            mPtrData = lTemp;
+            mSize = aCount;
+        }
+    }
+
+    void push_back(const T& aElement)
+    {
+
+    }
+
+
+
 
     ~MyVector()
     {
@@ -170,9 +192,10 @@ public:
     }
 
 private:
+    size_type mSize {0};
+    size_type mCurrentPos {0};
     Allocator mAllocator{};
     pointer mPtrData;
-    size_type mSize {0};
 };
 
 int main()
@@ -180,6 +203,7 @@ int main()
     MyVector m(10,10);
     m[0] = 12;
     std::cout << m[0] << " , " << m[1] << " , " << m[2] << std::endl;
+    m.resize(30);
     // MyVector m2{1,2,3,4,5};
     // m2[1] = m[2];
 

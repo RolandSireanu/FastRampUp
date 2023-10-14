@@ -1,0 +1,5 @@
+/Users/sireanuroland/Work/SystemProgrammingLinux/FileDescriptors/CreateTempFile/build/CMakeFiles/rebuild_cache.dir
+/Users/sireanuroland/Work/SystemProgrammingLinux/FileDescriptors/CreateTempFile/build/CMakeFiles/edit_cache.dir
+/Users/sireanuroland/Work/SystemProgrammingLinux/FileDescriptors/CreateTempFile/build/CMakeFiles/CreateTemp.dir
+/Users/sireanuroland/Work/SystemProgrammingLinux/FileDescriptors/CreateTempFile/build/src/CMakeFiles/rebuild_cache.dir
+/Users/sireanuroland/Work/SystemProgrammingLinux/FileDescriptors/CreateTempFile/build/src/CMakeFiles/edit_cache.dir

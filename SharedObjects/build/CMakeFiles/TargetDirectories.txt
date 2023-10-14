@@ -1,4 +1,0 @@
-/Users/sireanuroland/Work/SystemProgrammingLinux/SharedObjects/build/CMakeFiles/rebuild_cache.dir
-/Users/sireanuroland/Work/SystemProgrammingLinux/SharedObjects/build/CMakeFiles/edit_cache.dir
-/Users/sireanuroland/Work/SystemProgrammingLinux/SharedObjects/build/CMakeFiles/main.dir
-/Users/sireanuroland/Work/SystemProgrammingLinux/SharedObjects/build/CMakeFiles/mylib.dir

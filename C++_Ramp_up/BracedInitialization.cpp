@@ -75,9 +75,24 @@ C smallObject {2,3};    //Now , this will call the initializer_list constructor.
                         //Before initializer_list constructor was declared , that expres would
                         //have called the 2 params constructor C(int,int).
 
+// In case of aggregate initialization, the uniform initialization "{}" will zero init the members
+// while the default initialization will set the members to undefined values:
+struct Point
+{
+    int x;
+    int y;
+};
+
+
+
 int main()
 {
     w1 = w2;       //Copy operator called
     std::vector<double> BigVectorSize(1024,2.32);
+    
+    Point p;    //Undefined values for x and y members
+    Point p2 {}; //Zero initialize x and y members
+
+    
     return 0;
 }

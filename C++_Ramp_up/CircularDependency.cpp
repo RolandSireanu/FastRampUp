@@ -1,31 +1,30 @@
 #include <iostream>
-#include <vector>
 #include <memory>
-#include <string>
-using namespace std;
 
-class MyClass
-{
-    public:
+class B;
 
-    void setMember(const shared_ptr<MyClass>& arg)
-    {
-        member = arg;
+class A {
+public:
+    std::shared_ptr<B> b;
+    ~A() {
+        std::cout << "A destructor\n";
     }
-
-    ~MyClass()
-    {
-        std::cout <<"~MyClass() \n"<< std::endl;
-    }
-
-    shared_ptr<MyClass> member;
 };
 
-int main()
-{
+class B {
+public:
+    std::shared_ptr<A> a;
+    ~B() {
+        std::cout << "B destructor\n";
+    }
+};
 
-    shared_ptr<MyClass> m(new MyClass());
-    m->setMember(m);
+int main() {
+    std::shared_ptr<A> a = std::make_shared<A>();
+    std::shared_ptr<B> b = std::make_shared<B>();
+
+    a->b = b;
+    b->a = a;
 
     return 0;
 }

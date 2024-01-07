@@ -5,7 +5,7 @@
 using namespace std;
 
 
-template<typename T1, typename T2=int>
+template<typename T1=float, typename T2=int>
 struct test_struct 
 {
     static constexpr bool value = false;
@@ -18,51 +18,50 @@ struct test_struct<T1, void>
     static constexpr bool value = true;
 };
 
+template<typename T2>
+struct test_struct<char, T2>
+{
+    static constexpr bool value = true;
+};
+
 
 int main()
 {
-// By default compiler will generate test_struct representations for each
-// of the below types.
-// ===== Step 1: Compiler generates specializations for every requested types
-// 			   If the second argument is not specified, the default one "int" is used, otherwise
-// 			   T2 is used (see <double,float> scenario)
-// 
-    test_struct<float>::value;	
-//    template<>
-//    struct test_struct<float, int>
-//    {
-//     inline static constexpr const bool value = false;
-//    };
-  
-    test_struct<int>::value;
-//    template<>
-//    struct test_struct<int, int>
-//    {
-//     inline static constexpr const bool value = false;
-//    };
-  
-    test_struct<double>::value;
-//    template<>
+// By default compiler will generate test_struct implementation for each of the requested pair of types.
+// In case not all the arguments are specified, they will be replaced by default arguments
+// If there is a specialization for at least one argument defined by user, that one will be picked and
+// if one or more arguments are not specified, again will use the default values.
+
+    test_struct<double>::value;	
+//    template<>    Generic version
 //    struct test_struct<double, int>
 //    {
 //     inline static constexpr const bool value = false;
 //    };
+
+    test_struct<char>::value;	
+//    template<>    Specialization
+//    struct test_struct<char, int>
+//    {
+//     inline static constexpr const bool value = true;
+//    };
+  
   
   	test_struct<double,float>::value;
-//	 template<>
+//	 template<>     Generic version
 //	 struct test_struct<double, float>
 //	 {
 //    inline static constexpr const bool value = false;
 //	 };
   
-// ===== Step 2: If any of the specialization already exists, used them and don't generate
-  // new ones. Like above, specialization for <any_type, void> was specified by the user => use it !
-  	test_struct<char,void>::value;
-//   template<>
-//	 struct test_struct<char, void>
-//	 {
-//   	inline static constexpr const bool value = true;
-//	 };
+  	test_struct<>::value;
+//  template<typename T1=float, typename T2=int>
+//  struct test_struct 
+//  {
+//      static constexpr bool value = false;
+//  };  
+  
+// 	 test_struct<char,void>::value;		Ambiguous specialization 
 
     return 0;
 }

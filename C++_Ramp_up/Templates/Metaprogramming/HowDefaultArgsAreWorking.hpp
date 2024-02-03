@@ -8,14 +8,20 @@ using namespace std;
 template<typename T1=float, typename T2=int>
 struct test_struct 
 {
-    static constexpr bool value = false;
+    static constexpr int value = 0;
 };
-
 
 template<typename T1>
 struct test_struct<T1, void>
 {
-    static constexpr bool value = true;
+    static constexpr int value = 1;
+};
+
+// First argument is double, the second one should be deduced or replaced with default if exists
+template<typename T2>
+struct test_struct<double, T2>
+{
+    static constexpr int value = 2;
 };
 
 template<typename T2>
@@ -23,6 +29,8 @@ struct test_struct<char, T2>
 {
     static constexpr bool value = true;
 };
+
+
 
 
 int main()

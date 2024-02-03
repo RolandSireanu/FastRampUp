@@ -51,6 +51,7 @@ int main()
     int a = 1;
     const int b = 23;
     int& r = a;
+    int&& rref = 3;
     const int &cr = a;
 
     //=================================================================
@@ -58,13 +59,21 @@ int main()
     c1(b);      //T = const int ,   ParamType = const int&
     c1(r);      //T = int,          ParamType = int&
     c1(cr);     //T = const int ,   ParamType = const int&
+  	c1(rref);	//T = int		,   ParamType = int&
 
     c11(a);     //T = int ,         ParamType = const int&
     c11(b);     //T = int ,         ParamType = const int&
     c11(cr);    //T = int ,         ParamType = const int&
+   	c11(rref);  //T = int , 		ParamType = const int&
 
     c111(&a);   //T = int ,         ParamType = int*
     c111(&b);    //T = const int ,  ParamType = const int*    
+
+
+    //c1(T& arg)
+    //void c11(const T& arg)
+    //void c2(T&& arg)
+    //void c3(T arg)
 
     //=================================================================
 
@@ -72,13 +81,14 @@ int main()
     c2(b);      //T = const int&,   ParamType = const int&
     c2(r);      //T = int&          ParamType = int&
     c2(9);      //T = int,          ParamType = int&&
+  	c2(rref);	//T = int,			ParamType = int&&
 
     //=================================================================
     c3(a);      //T = int , ParamType = int
     c3(b);      //T = int , ParamType = int
     c3(r);      //T = int , ParamType = int
     c3(cr);     //T = int , ParamType = int
-
+	c3(rref);	//T = int , ParamType = int
 
 
     return 0;

@@ -1,3 +1,5 @@
+// Do not rely on transitive inclusions. This allows people to remove no-longer-needed #include statements from their headers without breaking clients.
+// Include headers in the following order: Related header, C system headers, C++ standard library headers, other libraries' headers, your project's headers.
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -5,7 +7,28 @@
 #include <span>
 using namespace std;
 
+// All declarations can be given internal linkage by placing them in unnamed namespaces.
+namespace
+{
 
+// Make a function a member only if it needs direct access to the representation of a class
+// A helper function doesn't need direct access to the representation of the class, yet it is seen
+// as part of the interface. It should be placed in the same namespace as the class to make their relation
+// obvious
+bool isShapeBigEnough(Operation const& aOperation)
+{
+    if(aOperation.shape.w > 100)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+}
+
+
+// Use namespaces: Namespaces subdivide the global scope into distinct, named scopes, and so are useful for preventing name collisions in the global scope.
 namespace NN
 {
     // Prefer enumeration over macros
@@ -37,6 +60,7 @@ public:
     // If you can avoid defining the constructors/destructors, do it
     // You should have a default constructor, many std containers relay on it. Make it simple&noexcept
     // Don’t define a default constructor that only initializes data members; use in-class member initializers instead
+    // Don't call virtual functions in the constructor
     Operation() noexcept = default;
     // Define and initialize member variables in the order of member declaration
     Operation(Shape const& aShape, int aId, string const& aOpName) : mId{aId}, mShape{aShape}, mName{aOpName} {}
@@ -96,19 +120,7 @@ class NeuralNetworkOperation : public Operation
     using Operation::Operation;
 };
 
-// Make a function a member only if it needs direct access to the representation of a class
-// A helper function doesn't need direct access to the representation of the class, yet it is seen
-// as part of the interface. It should be placed in the same namespace as the class to make their relation
-// obvious
-bool isShapeBigEnough(Operation const& aOperation)
-{
-    if(aOperation.shape.w > 100)
-    {
-        return true;
-    }
 
-    return false;
-}
 
 
 

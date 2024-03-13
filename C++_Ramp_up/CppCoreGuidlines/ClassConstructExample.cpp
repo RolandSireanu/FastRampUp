@@ -61,7 +61,14 @@ public:
     // You should have a default constructor, many std containers relay on it. Make it simple&noexcept
     // Don’t define a default constructor that only initializes data members; use in-class member initializers instead
     // Don't call virtual functions in the constructor
+    // How to signal an error in constructor? Crash the program if it is an option, otherwise use a Factory or an Init() method
     Operation() noexcept = default;
+
+    // Alwasy mark conversion constructors and operators as explicit to avoid implicit conversion
+    explicit Operation(int){}    // Conversion constructor
+    explicit operator int() {}   // Conversion operator
+
+
     // Define and initialize member variables in the order of member declaration
     Operation(Shape const& aShape, int aId, string const& aOpName) : mId{aId}, mShape{aShape}, mName{aOpName} {}
 
@@ -97,13 +104,18 @@ public:
 
     }
 
+    // For output value, prefer using the return value over params
+    // Return by value, or by reference, return a raw pointer only if it can be null
+    // Input params before output params in declaration
+    int paramPassing(int inParam, const int& inParam2, int& outParam);
+
 
     // When a destructor needs to be declared just to make it virtual, it can be defined as defaulted.
     // A destructor must not fail, declare it NOEXCEPT
     // Destructor should be public and virtual
     virtual ~Operation() noexcept = default;
 
-
+    // Alwasy add override and final keywords
 
 private:
     
@@ -121,9 +133,6 @@ class NeuralNetworkOperation : public Operation
 };
 
 
-
-
-
 // Use "using" for customization points. This is done by including the general function in the lookup for the function
 void Interchange(Operation& a, Operation& b)
 {
@@ -131,6 +140,13 @@ void Interchange(Operation& a, Operation& b)
     //If it exists, use the specific swap implementation for Operation, otherwise use the std::swap
     swap(a, b);
 }
+
+// Rvalue reference and when to use it?
+//      - move constructor/assigment operator
+//      - define && qualified methods, suitable only for rvalue *this
+//      - use in conjuction with std::forward to achive perfect forwarding
+//      - define pairs of overloads like (const Foo& and Foo&&)
+
 
 }
 

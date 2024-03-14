@@ -147,6 +147,8 @@ void Interchange(Operation& a, Operation& b)
 //      - use in conjuction with std::forward to achive perfect forwarding
 //      - define pairs of overloads like (const Foo& and Foo&&)
 
+// Friends should be defined in the same translation unit.
+// A common case is the Builder pattern
 
 }
 

@@ -115,6 +115,7 @@ public:
         using reference = T&;
 
         Iterator(pointer aData) : mData{aData} {}
+        Iterator(MyVector const& aVec) : mData{aVec.mPtrData} {}
         reference operator*() { return *mData; }
         pointer operator->()  { return mData;  }
         Iterator& operator++() { mData++; return *this; }
@@ -122,6 +123,30 @@ public:
 
         friend bool operator==(const Iterator& lhs, const Iterator& rhs) { return lhs.mData == rhs.mData; }
         friend bool operator!=(const Iterator& lhs, const Iterator& rhs) { return lhs.mData != rhs.mData; }
+    private:
+        pointer mData;
+    };
+
+    class ConstIterator
+    {
+    public:
+        using iterator_category = std::forward_iterator_tag;
+        using difference_type = std::ptrdiff_t;
+        using value_type = const T;
+        using pointer = const T*;
+        using reference = const T&;
+
+        explicit ConstIterator(pointer aData) : mData{aData} {}
+        ConstIterator(MyVector const& aVec) : mData{aVec.mPtrData} {}
+        reference operator*() const { return *mData; }
+        pointer operator->()  const { return mData;  }
+        ConstIterator& operator++() { mData++; return *this; }
+        ConstIterator& operator++(int) {Iterator& orig = *this; ++(*this); return orig; }
+
+        friend bool operator==(const ConstIterator& lhs, const ConstIterator& rhs) { return lhs.mData == rhs.mData; }
+        friend bool operator!=(const ConstIterator& lhs, const ConstIterator& rhs) { return lhs.mData != rhs.mData; }
+        friend bool operator>(const ConstIterator& lhs, const ConstIterator& rhs)  { return lhs.mData > rhs.mData; }
+        friend bool operator<(const ConstIterator& lhs, const ConstIterator& rhs)  { return lhs.mData < rhs.mData; }
     private:
         pointer mData;
     };
@@ -161,6 +186,8 @@ public:
     reference_type operator[](size_type aPos) { return mPtrData[aPos]; }
     Iterator begin() { return Iterator{mPtrData}; }
     Iterator end() { return Iterator{mPtrData + mSize}; }
+    ConstIterator cbegin() { return ConstIterator{mPtrData}; }
+    ConstIterator cend() { return ConstIterator{mPtrData + mSize}; }
 
     void resize(size_type aCount)
     {
@@ -179,14 +206,10 @@ public:
     }
 
     void push_back(const T& aElement)
-    {
-
+    {        
     }
 
-
-
-
-    ~MyVector()
+    ~MyVector() noexcept
     {
         mAllocator.deallocate(mPtrData, mSize);
     }
@@ -197,6 +220,15 @@ private:
     Allocator mAllocator{};
     pointer mPtrData;
 };
+
+template<typename T>
+auto begin(MyVector<T> const& aVector) { return aVector.begin(); }
+template<typename T>
+auto end(MyVector<T> const& aVector) {return aVector.end(); }    
+template<typename T>
+auto cbegin(MyVector<T> const& aVector) ->decltype(aVector.cbegin()) { return aVector.cbegin(); }
+template<typename T>
+auto cend(MyVector<T> const& aVector) -> decltype(aVector.cend()) { return aVector.cend(); }
 
 int main()
 {
@@ -211,7 +243,9 @@ int main()
     // MyVector<int> m3(a.begin(), a.end());
 
     for(const auto& e : m)
-        std::cout << e << std::endl;
+        std::cout << e << std::endl;    
+    
+    
 
 
     return 0;

@@ -18,14 +18,18 @@ public:
     // void begin(const int*&)
     // Can bind lvalue const/non-const "this" pointer: constantContainer.begin()
     // Can bind rvalue "this" pointer: Container{}.begin()
+    // const = I WON'T MODIFY THE OBJECT
+    // &     = CALL ME ONLY ON LVALUE
     
     void begin() & {std::cout << "-" << std::endl; }
     //  void begin(Container*&)
     //  Can bind lvalue "this" pointers: myContainer.begin()
+    //  &     = CALL ME ONLY ON NONCONST LVALUE EXPRESIONS BECAUSE I CAN MODIFY THE OBJECT
 
     void begin() && {std::cout << "&&" << std::endl; }  
     //  void begin(Container*&&)
     //  Can bind only rvalue "this" pointers: Container{}.begin();
+    // &&     = CALL ME ONLY ON RVALUE EXPRESIONS
 
     // void begin() const {}
     // void begin(const Container*)

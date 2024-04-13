@@ -66,6 +66,7 @@ template<typename T> struct my_remove_reference<T&&> {using type = T;};
 
 template<typename T> typename my_remove_reference<T>::type&& my_move(T&& arg) {return static_cast<typename my_remove_reference<T>::type&&>(arg);}
 
+// ======================== Function Template Overloading ==============================
 template<typename T, typename ... Args, typename=typename my_enable_if<!my_is_array<T>::value>::type >
 unique_ptr<T> my_make_unique(Args... args)
 {
@@ -77,6 +78,9 @@ unique_ptr<T> my_make_unique(size_t size)
 {
     return unique_ptr<T>(new typename my_remove_extent<T>::type[size]);
 }
+//Two template functions that generate overloads for the same my_make_unique
+//Enable_if will assure that only one template will be used at a time to generate my_make_unique
+// ======================================================================================
 
 template<typename T>
 T&& my_forward(typename my_remove_reference<T>::type& arg)

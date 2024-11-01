@@ -15,6 +15,7 @@ HwInterface hwInterface;
 // The logic is combined with the hw actions
 // In order to test it, you are going to need a mock for 
 // setSemaphore. 
+// So probabbly you won't unit test it.
 void setTrafficLight(int32_t aWaitingPeople)
 {
     if(aWaitingPeople > 10)                 // Logic
@@ -29,8 +30,9 @@ void setTrafficLight(int32_t aWaitingPeople)
 
 
 // =========== A way better alternative ===============
-
-// You can test the logic part separately from the hw code
+// If you separate the logic from HW yoy can at lest test the logic.
+// The main ideea is to separate the HW code (that needs mocking) from the logic code.
+// The "getNextTrafficLight" can be easily unit tested 
 Colors getNextTrafficLight(int32_t aWaitingPeople)
 {
     return aWaitingPeople > 10 ? GREEN : RED;

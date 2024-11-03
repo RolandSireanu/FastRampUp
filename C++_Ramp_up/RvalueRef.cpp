@@ -152,7 +152,7 @@
 
         Buffer b(100);    
         
-        //COnst reference can bind on rvalue as opposed to non-const references
+        //Const reference can bind on rvalue as opposed to non-const references
         //This behaviour is accepted because you will want to call the 
         //fnct function like this : "something" with an rvalue
         fnct("baba");

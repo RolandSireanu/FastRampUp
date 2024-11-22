@@ -10,7 +10,7 @@ int main()
     // Why does it compile?
     // The "begin()" doesn't exist in the global namespace
     // It is declared/defined in the std namespace, how it is found?
-    // ADL comes into play the searches in the namespace where the type of argument is defined.
+    // ADL comes into play and searches in the namespace where the type of argument is defined.
     // "v" is a vector, defined in std, compiler will search for "begin()" function in std namespace.
     auto temp = begin(v);
 

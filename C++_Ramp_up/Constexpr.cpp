@@ -47,7 +47,7 @@ std::array<int,pow(3,cmds)> data;
 
 // ===========================================================
 
-//For a method to be executed at runtime , it must :
+//For a method to be executed at compile time , it must :
 //  - Have a return type != void
 //  - don't modify the internal state of the object
 //  - arguments should be known at compile time

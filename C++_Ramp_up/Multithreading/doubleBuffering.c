@@ -10,21 +10,14 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define NR_OF_THREADS       20
+#define NR_OF_THREADS       24
 #define MAX_NR_OF_ENTRIES   1024
 
 typedef struct Request
-{
-    int mId;
+{    
     int mStartInterval;
     int mEndInterval;
 }Request_t;
-
-typedef struct Response
-{
-    int mSum;
-    int mId;
-} Response_t;
 
 typedef struct InBuffer
 {
@@ -36,7 +29,7 @@ typedef struct InBuffer
 
 typedef struct OutBuffer
 {
-    Response_t mBuffer[MAX_NR_OF_ENTRIES];
+    int mBuffer[MAX_NR_OF_ENTRIES];
     pthread_mutex_t mMutex;
     int mFirstFreePos;
     int mNrOfEntries;
@@ -49,32 +42,41 @@ pthread_cond_t  gCondSpaceInInput = PTHREAD_COND_INITIALIZER;
 pthread_cond_t gCondSpaceInOutput = PTHREAD_COND_INITIALIZER;
 pthread_cond_t gCondOutBufferAvailable = PTHREAD_COND_INITIALIZER;
 
-int Sum(int aStart, int aEnd)
-{
-    int lSum=0;
-    for(unsigned long i=aStart; i < aEnd; ++i)
+int isPrime(int num) {
+    if (num <= 1) 
     {
-        unsigned long lIsPrimeNumber = 1;
-        //Search for a divider
-        for(unsigned long d=2; d<i/2; ++d)
-        {
-            if(i % d == 0)
-            {
-                lIsPrimeNumber = 0;    
-                break;
-            }
-        }
+        return 0;
+    }
+    if (num <= 3) 
+    {
+        return 1; // 2 and 3 are prime numbers
+    }
 
-        if(lIsPrimeNumber == 1)
+    for(int i=2; i<num; ++i)
+    {
+        if(num % i == 0)
         {
-            lSum += i;
+            return 0;
         }
     }
-    return lSum;
+
+    return 1;
 }
 
+int Sum(int start, int end) 
+{
+    int sum = 0;
+    for (int i = start; i <= end; ++i) 
+    {
+        if (isPrime(i) == 1) 
+        {
+            sum += i;
+        }
+    }
+    return sum;
+}
 
-void AddToOutpBuffer(Response_t aResp)
+void AddToOutpBuffer(int aResp)
 {
     pthread_mutex_lock(&gOutBuffer.mMutex);
     // If first free position is < MAX_NR_OF_ENTRIES => there is still space in gOutBuffer
@@ -96,9 +98,9 @@ void AddToOutpBuffer(Response_t aResp)
     pthread_mutex_unlock(&gOutBuffer.mMutex);
 }
 
-Response_t GetFromOutBuffer()
+int GetFromOutBuffer()
 {
-    Response_t lResp;
+    int lResp;
 
     pthread_mutex_lock(&gOutBuffer.mMutex);
     while(gOutBuffer.mNrOfEntries == 0)
@@ -167,7 +169,8 @@ void* Thread(void* arg)
     while(1)
     {   
         Request_t const lReq = GetFromInBuffer();
-        Response_t lResp = {.mSum = Sum(lReq.mStartInterval, lReq.mEndInterval), .mId = 0};
+        int lResp = Sum(lReq.mStartInterval, lReq.mEndInterval);
+        printf("Start/EndInterval = [%d - %d]   Sum = %d\n", lReq.mStartInterval, lReq.mEndInterval, lResp);
         AddToOutpBuffer(lResp);
     }
     return NULL;
@@ -181,7 +184,7 @@ int main()
 
     for(int i=0; i<NR_OF_THREADS; ++i)
     {
-        Request_t lTempReq = {.mStartInterval=1, .mEndInterval = rand() % 10000, .mId = lId};
+        Request_t lTempReq = {.mStartInterval=0, .mEndInterval = rand() % 100000};
         lId++;
         AddToInputBuffer(lTempReq);
     }
@@ -195,15 +198,13 @@ int main()
     {
         for(int i=0; i<NR_OF_THREADS/10; ++i)
         {
-            Request_t lTempReq = {.mStartInterval=1, .mEndInterval = rand() % 10000, .mId = lId};
+            Request_t lTempReq = {.mStartInterval=0, .mEndInterval = rand() % 100000};
             lId++;
             AddToInputBuffer(lTempReq);
             usleep(100);
         }
 
-        Response_t lResponse = GetFromOutBuffer();
-        printf("Result = %d\n", lResponse.mSum);
-
+        int lResponse = GetFromOutBuffer();
     }
 
     for(int i=0; i<NR_OF_THREADS; ++i)

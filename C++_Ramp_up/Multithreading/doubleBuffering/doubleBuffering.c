@@ -10,7 +10,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define NR_OF_THREADS       24
+#define NR_OF_THREADS       8
 #define MAX_NR_OF_ENTRIES   1024
 
 typedef struct Request
@@ -136,7 +136,7 @@ void AddToInputBuffer(Request_t aReq)
         gInBuffer.mNrOfEntries++;
     }
     
-    printf("Nr of entries in input buffer %d\n", gInBuffer.mNrOfEntries);
+    // printf("Nr of entries in input buffer %d\n", gInBuffer.mNrOfEntries);
     pthread_cond_broadcast(&gCondInputAvailable);
     pthread_mutex_unlock(&gInBuffer.mMutex);
 }
@@ -196,7 +196,7 @@ int main()
 
     while(1)
     {
-        for(int i=0; i<NR_OF_THREADS/10; ++i)
+        for(int i=0; i<NR_OF_THREADS; ++i)
         {
             Request_t lTempReq = {.mStartInterval=0, .mEndInterval = rand() % 100000};
             lId++;

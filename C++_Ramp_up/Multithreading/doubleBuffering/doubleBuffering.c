@@ -10,7 +10,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define NR_OF_THREADS       8
+#define NR_OF_THREADS       20
 #define MAX_NR_OF_ENTRIES   1024
 
 typedef struct Request
@@ -41,6 +41,7 @@ pthread_cond_t  gCondInputAvailable = PTHREAD_COND_INITIALIZER;
 pthread_cond_t  gCondSpaceInInput = PTHREAD_COND_INITIALIZER;
 pthread_cond_t gCondSpaceInOutput = PTHREAD_COND_INITIALIZER;
 pthread_cond_t gCondOutBufferAvailable = PTHREAD_COND_INITIALIZER;
+pthread_key_t gKey;
 
 int isPrime(int num) {
     if (num <= 1) 
@@ -63,10 +64,12 @@ int isPrime(int num) {
     return 1;
 }
 
-int Sum(int start, int end) 
+int SumPrimeNumbers() 
 {
     int sum = 0;
-    for (int i = start; i <= end; ++i) 
+    Request_t lReq = *((Request_t*)pthread_getspecific(gKey));
+
+    for (int i = lReq.mStartInterval; i <= lReq.mEndInterval; ++i)
     {
         if (isPrime(i) == 1) 
         {
@@ -74,6 +77,11 @@ int Sum(int start, int end)
         }
     }
     return sum;
+}
+
+int inline GenEndInterval()
+{
+    return rand() % 100000;
 }
 
 void AddToOutpBuffer(int aResp)
@@ -129,14 +137,14 @@ void AddToInputBuffer(Request_t aReq)
         pthread_cond_wait(&gCondSpaceInInput, &gInBuffer.mMutex);
     }
     
-    if(gInBuffer.mFirstFreePos < (MAX_NR_OF_ENTRIES - 1))
+    if(gInBuffer.mFirstFreePos < (MAX_NR_OF_ENTRIES - 1) && gInBuffer.mNrOfEntries < (MAX_NR_OF_ENTRIES-1))
     {
         gInBuffer.mBuffer[gInBuffer.mFirstFreePos] = aReq;
         gInBuffer.mFirstFreePos++;
         gInBuffer.mNrOfEntries++;
     }
     
-    // printf("Nr of entries in input buffer %d\n", gInBuffer.mNrOfEntries);
+    printf("Nr of entries in input buffer %d\n", gInBuffer.mNrOfEntries);
     pthread_cond_broadcast(&gCondInputAvailable);
     pthread_mutex_unlock(&gInBuffer.mMutex);
 }
@@ -155,7 +163,7 @@ Request_t GetFromInBuffer()
     {
         lReq = gInBuffer.mBuffer[gInBuffer.mFirstFreePos-1];
         gInBuffer.mFirstFreePos--;
-        gInBuffer.mNrOfEntries--;
+        gInBuffer.mNrOfEntries--;        
     }
 
     pthread_cond_broadcast(&gCondSpaceInInput);
@@ -168,9 +176,11 @@ void* Thread(void* arg)
 {
     while(1)
     {   
-        Request_t const lReq = GetFromInBuffer();
-        int lResp = Sum(lReq.mStartInterval, lReq.mEndInterval);
-        printf("Start/EndInterval = [%d - %d]   Sum = %d\n", lReq.mStartInterval, lReq.mEndInterval, lResp);
+        Request_t lReq = GetFromInBuffer();
+
+        pthread_setspecific(gKey, &lReq);
+        int lResp = SumPrimeNumbers();
+        printf("Start/EndInterval = [%d - %d]   SumPrimeNumbers = %d\n", lReq.mStartInterval, lReq.mEndInterval, lResp);
         AddToOutpBuffer(lResp);
     }
     return NULL;
@@ -182,9 +192,17 @@ int main()
     pthread_t lArrayOfThreads[NR_OF_THREADS];
     srand(time(NULL));   // Initialization, should only be called once
 
+    pthread_key_create(&gKey, NULL);
+
+    for(int i=0; i<MAX_NR_OF_ENTRIES; ++i)
+    {
+        pthread_mutex_init(&gInBuffer.mMutex, NULL);
+        pthread_mutex_init(&gOutBuffer.mMutex, NULL);
+    }
+
     for(int i=0; i<NR_OF_THREADS; ++i)
     {
-        Request_t lTempReq = {.mStartInterval=0, .mEndInterval = rand() % 100000};
+        Request_t lTempReq = {.mStartInterval=0, .mEndInterval = GenEndInterval()};
         lId++;
         AddToInputBuffer(lTempReq);
     }
@@ -198,10 +216,10 @@ int main()
     {
         for(int i=0; i<NR_OF_THREADS; ++i)
         {
-            Request_t lTempReq = {.mStartInterval=0, .mEndInterval = rand() % 100000};
+            Request_t lTempReq = {.mStartInterval=0, .mEndInterval = GenEndInterval()};
             lId++;
-            AddToInputBuffer(lTempReq);
-            usleep(100);
+            AddToInputBuffer(lTempReq);    
+
         }
 
         int lResponse = GetFromOutBuffer();

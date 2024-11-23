@@ -11,6 +11,33 @@
 #include <stdlib.h>
 
 /*
+To support the "Pthreads" (POSIX threads) standard, the following hardware operations are generally necessary, particularly to implement synchronization primitives like mutexes and condition variables efficiently:
+1. Atomic Operations: The hardware must support atomic operations to manipulate memory safely in concurrent contexts. This typically includes:
+    * Atomic Test-and-Set: Used to change the state of a lock in one uninterruptible operation.
+    * Atomic Compare-and-Swap (CAS): Used to implement more complex, lock-free data structures and synchronization mechanisms.
+2. Memory Barriers (Fences): These operations ensure memory operations are completed in a specified order. They're used to prevent reordering by the compiler or CPU, 
+    which is crucial for ensuring that changes made by one thread are visible to others appropriately.
+3. Timer and Interrupt Support: Support for timers and handling interrupts are critical for implementing thread scheduling, context switching, and sleep/wake mechanisms.
+4. Context Switching: The ability to save and load CPU register states efficiently so that the execution of one thread can be paused and another resumed. This is typically 
+    more related to the operating system’s role but is highly dependent on CPU capabilities and features like interrupt handling and mode switching.
+5. Cache Coherency Mechanisms: In multi-core systems, ensuring cache coherence so that changes in one core’s cache are reflected across other cores is important 
+    to maintain data consistency for shared data among threads.
+
+These hardware features are leveraged by the operating system and threading libraries (like Pthreads) to provide thread management, 
+synchronization, and scheduling capabilities effectively. While the exact implementation details can vary based on architecture and operating system, 
+these features are fundamental building blocks for supporting the efficient, safe execution of multiple threads in parallel.
+
+Memory barriers in pthread standard:
+Where are memory barriers used in pthreads standard?
+1. Mutexes:
+    * When a thread acquires or releases a mutex using pthread_mutex_lock() or pthread_mutex_unlock(), memory barriers are used to ensure that all memory operations (reads and writes) that occurred before the lock is unlocked are visible to all threads that subsequently acquire that lock.
+    * This guarantees that any data modified while a mutex is held is correctly seen by another thread that later acquires that same mutex.
+2. Condition Variables:
+    * In pthread_cond_wait() and pthread_cond_signal(), memory barriers are used to ensure that changes made to shared variables are visible to other threads. For instance, when a thread waits on a condition variable, it must release the associated mutex and ensure that all changes made to shared data are visible before it waits.
+    * Conversely, when signaling a condition variable with pthread_cond_signal(), the memory barrier ensures that any prior writes made by the signaling thread are visible to the thread that receives the signal.
+*/
+
+/*  
     Thread local storage (memory globally available in the contex of a single thread)
     Memory isn't shared with other threads.
     Each thread has a clear and isolated context, which enhances data integrity and clarity
@@ -27,6 +54,15 @@
                                     Example:
                                         void t1(void*){ pthread_mutex_lock(&lock1); ... pthread_mutex_lock(&lock2) ... }
                                         void t1(void*){ pthread_mutex_lock(&lock2); ... pthread_mutex_lock(&lock1) ... }
+        Priority inversion: A lower priority thread hold a lock required by a higher priority thread, causing the last one to wait.
+                            Can be mitigated using priority inheritance of priority ceiling protocols
+        Inefficient data sharing: Excesive data sharing between threads can lead to bottlenecks. Minimize sharing and use fine-grained locking to reduce contention and
+                                  improve concurrency execution.
+                                  Excesive data sharing brings high contention on mutex. When multiple threads try to aquire a mutex only one will succed, the rest
+                                  will be waiting, loosing the opportunity to concurrency execution. Also locking and unlocking a mutex brings additional overhead
+                                  because of the need to manage the synchronization primitives
+                                  An option to sharing data is using Lock-free data structures (TODO).
+
                                     
 
 
@@ -114,6 +150,23 @@ void Destruct(void* arg)
 
 static void AddToOutpBuffer(int aResp)
 {
+    /*
+        Locking and unlocking a mutex, at the lowest level it is implemented using an atomic hw operation, like CAS (compare and swap)
+        or test and set. Example of mutex implementation:
+        // Mutex implementation:
+        ============================
+        while (true) {
+        if (test_and_set(&lock) == 0) {
+            break;  // Lock acquired successfully
+        }
+        // Optionally, yield CPU, sleep, or perform other operations before retrying
+        }
+        //test _and_set is an atomic operation
+
+        There are also read/write mutexes, comes as an optimization over traditional ones. 
+       The primary purposes of a read/write lock are to improve performance by allowing multiple readers to access a resource simultaneously 
+       while ensuring that only one writer can modify the resource at any given time.
+    */
     pthread_mutex_lock(&gOutBuffer.mMutex);    
     while(gOutBuffer.mNrOfEntries == MAX_NR_OF_ENTRIES)
     {

@@ -41,7 +41,9 @@ Where are memory barriers used in pthreads standard?
     Thread local storage (memory globally available in the contex of a single thread)
     Memory isn't shared with other threads.
     Each thread has a clear and isolated context, which enhances data integrity and clarity
+*/
 
+/*
     Pitfalls in multithreaded programming:
         Race conditions: Occurs when multiple threads access shared data and at least one of thme modifies it without a proper
                          syncronization.
@@ -61,11 +63,32 @@ Where are memory barriers used in pthreads standard?
                                   Excesive data sharing brings high contention on mutex. When multiple threads try to aquire a mutex only one will succed, the rest
                                   will be waiting, loosing the opportunity to concurrency execution. Also locking and unlocking a mutex brings additional overhead
                                   because of the need to manage the synchronization primitives
-                                  An option to sharing data is using Lock-free data structures (TODO).
+                                  An option to sharing data is using Lock-free data structures (TODO).                                 
+*/
 
-                                    
+/* 
+    Recursive mutex (prevents deadlocks in case of recursive function call)
+        When are they useful?
+            1. When a function is called recursively
+            2. When a function call another function that needs the same lock
+        
+*/
 
+/*
+    pthread_once
+        Pthread_once execute make a single call to given routine inside thread.
+        First thread scheduled to execute the function will call the routine.
+        After this no other thread will be able to call the routine.
+        It is used mainly for initialization code (like in the current application),
+        sharing resources across threads (files, shared libs etc)    
+*/
 
+/* 
+    TO DO:
+        - Lock-free data structure        
+        - priority inversion principle        
+        - Threads scheduling
+        - Thread attributes (stack size, stack location)
 */
 
 
@@ -101,6 +124,25 @@ pthread_cond_t  gCondSpaceInInput = PTHREAD_COND_INITIALIZER;
 pthread_cond_t gCondSpaceInOutput = PTHREAD_COND_INITIALIZER;
 pthread_cond_t gCondOutBufferAvailable = PTHREAD_COND_INITIALIZER;
 pthread_key_t gKey;
+pthread_once_t gOnceCntrlVar = PTHREAD_ONCE_INIT;
+
+void Destruct(void* arg)
+{
+    printf("Destruct called\n");
+    free(arg);
+}
+
+void initResources()
+{
+    pthread_key_create(&gKey, Destruct);
+
+    for(int i=0; i<MAX_NR_OF_ENTRIES; ++i)
+    {
+        pthread_mutex_init(&gInBuffer.mMutex, NULL);
+        pthread_mutex_init(&gOutBuffer.mMutex, NULL);
+    }
+}
+
 static int isPrime(int num) {
     if (num <= 1) 
     {
@@ -139,14 +181,10 @@ static int SumPrimeNumbers()
 
 static int inline GenEndInterval()
 {
-    return rand() % 10000;
+    return rand() % 10;
 }
 
-void Destruct(void* arg)
-{
-    printf("Destruct called\n");
-    free(arg);
-}
+
 
 static void AddToOutpBuffer(int aResp)
 {
@@ -217,7 +255,7 @@ static int GetFromOutBuffer()
 
 static void AddToInputBuffer(Request_t aReq)
 {
-    pthread_mutex_lock(&gInBuffer.mMutex);    
+    pthread_mutex_lock(&gInBuffer.mMutex);
     while(gInBuffer.mNrOfEntries == MAX_NR_OF_ENTRIES)
     {
         pthread_cond_wait(&gCondSpaceInInput, &gInBuffer.mMutex);
@@ -258,7 +296,9 @@ static Request_t GetFromInBuffer()
 }
 
 void* Thread(void* arg)
-{
+{    
+    pthread_once(&gOnceCntrlVar, initResources);
+
     Request_t* lPtrReq = (Request_t*)malloc(sizeof(Request_t));
     while(1)
     {   
@@ -281,13 +321,13 @@ int main()
     srand(time(NULL));
 
     // Whenever a thread exits "Destruct"" function is called for each data that was set with "pthread_setspecific"
-    pthread_key_create(&gKey, Destruct);
+    // pthread_key_create(&gKey, Destruct);
 
-    for(int i=0; i<MAX_NR_OF_ENTRIES; ++i)
-    {
-        pthread_mutex_init(&gInBuffer.mMutex, NULL);
-        pthread_mutex_init(&gOutBuffer.mMutex, NULL);
-    }
+    // for(int i=0; i<MAX_NR_OF_ENTRIES; ++i)
+    // {
+    //     pthread_mutex_init(&gInBuffer.mMutex, NULL);
+    //     pthread_mutex_init(&gOutBuffer.mMutex, NULL);
+    // }
 
     for(int i=0; i<NR_OF_THREADS; ++i)
     {

@@ -41,6 +41,8 @@ Where are memory barriers used in pthreads standard?
     Thread local storage (memory globally available in the contex of a single thread)
     Memory isn't shared with other threads.
     Each thread has a clear and isolated context, which enhances data integrity and clarity
+    Using TLS threads create private copies of data, access its own version based on key.
+    Especially helpful for complex call chains where passing information is challenging.
 */
 
 /*
@@ -83,12 +85,57 @@ Where are memory barriers used in pthreads standard?
         sharing resources across threads (files, shared libs etc)    
 */
 
+/*
+    Thread attributes:
+        There are 3 main attributes a thread can have:
+        1. Stack size
+        2. Stack location
+        3. Detached or not
+
+        Stack size and location are usefull especially in the embedded systems or when you want to 
+        have complet control over the stack. You can check that the stack is big enough and 
+        doesn't overlap with stacks of other execution threads.  
+*/
+
+/*
+    Threads scheduling
+    In real time systems some threads are more important than others, so you want to increase their priority.
+    The scheduler compares the priorities of all runnable threads of all processes systemwide when selecting
+    a thread to run on an available CPU. It chooses the thread with highest priority regardless the process 
+    it belongs to.
+    Scheduling policies:
+        - FIFO (Let a thread run until it either calls exits or blocks).
+          Once it unblocks, it is put in the last place in priority queue.
+        - Round-Robin (Thread is interrupted after a fixed amount of time)
+*/
+
+/*
+    Priority inversion principle (bounded and unbounded)
+        Task 1 (low priority) runs and locks resource
+        Task 2 (high priority) gets into runnable state but needs that resource, it has to wait until the low priority
+               task releases the lock
+        Task 3 (medium priority) meanwhile, while task 2 is waiting, task 3 (which doesn't need the resource) preempts the task 1 because it has a higher
+               priority and now Task 2 waits for both task 1 and task 3.
+
+    Solutions:
+        Priority ceiling protocol:
+            A task can lock a resource only if its priority is higher than the current system ceiling, which is defined as the highest of 
+            all the priority ceilings of resources currently held by any task. If a higher priority task comes along while a resource is 
+            held by a lower-priority task, the lower-priority task temporarily inherits the higher priority to prevent other tasks 
+            (of intermediate priority) from running and potentially causing priority inversion. 
+            Therefore, the higher-priority task does not interrupt the lower-priority task immediately if the 
+            lower-priority task holds the lock on the needed resource. Instead, PCP elevates the lower-priority task's 
+            priority to ensure it can complete and release the lock, allowing the higher-priority task to eventually proceed.
+
+        Priority inheritance:
+            The low priority task inherits the priority of the blocking high priority task in order to prevent another 
+            medium priority task that doesn't need the resource to run before high priority task
+
+*/
+
 /* 
     TO DO:
-        - Lock-free data structure        
-        - priority inversion principle        
-        - Threads scheduling
-        - Thread attributes (stack size, stack location)
+        - Lock-free data structure                
 */
 
 
@@ -125,6 +172,8 @@ pthread_cond_t gCondSpaceInOutput = PTHREAD_COND_INITIALIZER;
 pthread_cond_t gCondOutBufferAvailable = PTHREAD_COND_INITIALIZER;
 pthread_key_t gKey;
 pthread_once_t gOnceCntrlVar = PTHREAD_ONCE_INIT;
+void *gStackStartAddr;
+int const gStackSize = 1024 * 1024;
 
 void Destruct(void* arg)
 {
@@ -134,7 +183,8 @@ void Destruct(void* arg)
 
 void initResources()
 {
-    pthread_key_create(&gKey, Destruct);
+    // Whenever a thread exits "Destruct"" function is called for each data that was set with "pthread_setspecific"
+    pthread_key_create(&gKey, Destruct);    
 
     for(int i=0; i<MAX_NR_OF_ENTRIES; ++i)
     {
@@ -317,17 +367,14 @@ void* Thread(void* arg)
 int main()
 {
     int lId = 0;
+    pthread_attr_t lAttr;
     pthread_t lArrayOfThreads[NR_OF_THREADS];
     srand(time(NULL));
 
-    // Whenever a thread exits "Destruct"" function is called for each data that was set with "pthread_setspecific"
-    // pthread_key_create(&gKey, Destruct);
-
-    // for(int i=0; i<MAX_NR_OF_ENTRIES; ++i)
-    // {
-    //     pthread_mutex_init(&gInBuffer.mMutex, NULL);
-    //     pthread_mutex_init(&gOutBuffer.mMutex, NULL);
-    // }
+    gStackStartAddr = malloc(sizeof(gStackSize));
+    pthread_attr_init(&lAttr);
+    // pthread_attr_setstacksize(&lAttr, gStackSize);
+    pthread_attr_setstack(&lAttr, gStackStartAddr, gStackSize);
 
     for(int i=0; i<NR_OF_THREADS; ++i)
     {
@@ -360,5 +407,8 @@ int main()
         pthread_join(lArrayOfThreads[i], NULL);
     }
 
-    pthread_key_delete(gKey);    
+    pthread_key_delete(gKey);
+    free(gStackStartAddr);
+    pthread_attr_destroy(&lAttr);
+
 }

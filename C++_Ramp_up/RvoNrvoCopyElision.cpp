@@ -25,7 +25,9 @@ void f(Widget arg)
     return;
 }
 
-// RVO (Return value optimization)
+// There are two types of RVO (Return value optimizatoins)
+
+// Unnamed RVO (Return value optimization)
 // The temporary Widget instance is build dirrectly into "yourWidget" variable => Single constructor call
 Widget buildWithRVO(int value)
 {
@@ -41,6 +43,17 @@ Widget buildWidget(int value)
     return temp;
 }
 
+// In which situations the compiler will most probably apply RVO?
+    // -> Single return path
+    // -> Same type for the ret value and the type of returned object
+    // -> Simple logic, without many branches
+/*
+    Generally, if a function appears to have a simple and straightforward structure, 
+    without complex branching, aliasing, or interactions that would make the lifetime of the returned object ambiguous, 
+    compilers are more likely to detect and apply RVO.
+    
+    Compiler flag that highlights situations where compiler couldn't apply RVO -Wnrvo
+*/
 
 
 int main()

@@ -18,6 +18,9 @@ int main()
     // "cout" defined in the std, "<<" defined in std, compiler finds << in std based on the cout object type
     std::cout << "Hello world" << std::endl;
 
+    //Witout the ADL we would have to call it like this:
+    std::operator<<(std::cout, "Hello world");
+
     
 
     return 0;

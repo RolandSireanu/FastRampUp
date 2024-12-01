@@ -1,6 +1,39 @@
 #include <iostream>
 using namespace std;
 
+// Overload resolution uses a ranking system to find the best match
+// The ranking system is based on the conversion from argument type to param type
+// There are three levels in the ranking system from cheap to expensive conv:
+    // -no conversion 
+    // array to pointer
+    // qualification conversion
+    
+    //integral promotion
+    //floating-point promotion
+
+    //integral conversion
+    //floating point conversion
+    //pointer conversion
+    //boolean conversion
+
+// Qualified vs unqualified names
+    // A name appearing ah the right of :: , . , -> is a qualified name
+    // A name that isn't qualified is unqualified
+    // string::assign       assign is qualified, string is unquallified
+
+// Lookup for qualified names is fairly simple:
+    // For S::n look for n into S whre S can be a namespace or class
+    // x.n look for n into object x
+
+// Lookup for unqualified name:
+//Unqualified name n appear in a non-member function f at namespace scope
+    // Look into the local scope (the block where name appear)
+    // Work outward to the scope of f 
+    // Look into namespace of f
+    // Work outward to the global scope
+    // Try ADL
+
+
 // Overload resolution process:
 // As a main guidline, how the candidates are ranked inside the overload set:
 // 1. The non template function are choosen first

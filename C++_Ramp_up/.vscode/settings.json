@@ -5,6 +5,7 @@
         "initializer_list": "cpp",
         "__split_buffer": "cpp",
         "list": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "optional": "cpp"
     }
 }

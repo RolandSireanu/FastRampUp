@@ -3,6 +3,9 @@
 #include <thread>
 #include <chrono>
 
+/*
+    Asynchronous programming shines in I/O-bound applications, while multithreading can be more suitable for CPU-bound tasks that can genuinely benefit from parallel execution.
+*/
 
 bool readFromIO()
 {

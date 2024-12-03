@@ -171,7 +171,7 @@ int main()
         AddToInBuffer(Request_t{.mStartInterval=0, .mEndInterval=lRandomNr});
 
         const int lResult = GetFromOutBuffer();
-        std::cout << "lResult = " << lResult << "\n";
+        // std::cout << "lResult = " << lResult << "\n";
     }
 
     for(auto& arg : lArrayOfThreads)

@@ -103,6 +103,17 @@ int main()
     [](){ cout << "hha" << endl; }();
 
 
+    // constexpr recursive Lambda
+    constexpr auto lSum = [](int endInterval) -> int{
+        constexpr auto recCall = [](int aValue, const auto& aCallable) ->int {
+            return aValue == 0 ? 0 : aValue + aCallable(aValue-1, aCallable);
+        };
+
+        return recCall(endInterval, recCall);
+    };
+    constexpr int lTemp = lSum(5);
+    static_assert(lTemp == 15);
+
 
     return 0;
 }

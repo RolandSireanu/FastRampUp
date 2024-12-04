@@ -43,6 +43,11 @@ Widget buildWidget(int value)
     return temp;
 }
 
+// When the RVO is not applied
+    // When the return type != type being returned
+    // Multiple return statement with different objects
+    // When it returns a complex expression (when there is not a lvalue or a prvalue)
+
 // In which situations the compiler will most probably apply RVO?
     // -> Single return path
     // -> Same type for the ret value and the type of returned object

@@ -1,7 +1,6 @@
 #include <thread>
 #include <iostream>
 #include <vector>
-#include <array>
 #include <mutex>
 #include <condition_variable>
 #include <queue>
@@ -34,6 +33,18 @@ std::condition_variable gCondOutputAvailable;
 std::condition_variable gCondSpaceInBuffer;
 std::condition_variable gCondSpaceInOutBuffer;
 thread_local Request_t gReq;
+
+namespace WorkloadGenerator
+{
+    std::random_device lDev;
+    std::mt19937 lRng(lDev());
+    std::uniform_int_distribution<std::mt19937::result_type> lDist(1,1000000);
+
+    inline int GenEndInterval()
+    {
+        return lDist(lDev);
+    }
+}
 
 static bool isPrime(const int num) 
 {
@@ -132,8 +143,6 @@ int GetFromOutBuffer()
     return lResult;
 }
 
-
-
 void Thread(int id)
 {        
     while(1)
@@ -148,16 +157,12 @@ int main()
 {
     using namespace std;
 
-    std::random_device lDev;
-    std::mt19937 lRng(lDev());
-    std::uniform_int_distribution<std::mt19937::result_type> lDist(1,10);
-
-    constexpr int lNrOfThreads {20};    
+    constexpr int lNrOfThreads {14};    
     std::vector<thread> lArrayOfThreads(lNrOfThreads);
 
     for(int i{0}; i<MAX_NR_OF_ENTRIES/2; ++i)
     {
-        AddToInBuffer(Request_t{.mStartInterval=0, .mEndInterval=static_cast<int>(lDist(lRng))});
+        AddToInBuffer(Request_t{.mStartInterval=0, .mEndInterval=static_cast<int>(WorkloadGenerator::GenEndInterval())});
     }
 
     for(int i{0}; i<lNrOfThreads; ++i)
@@ -167,7 +172,7 @@ int main()
 
     while(1)
     {
-        int lRandomNr = lDist(lRng);        
+        int lRandomNr = WorkloadGenerator::GenEndInterval();
         AddToInBuffer(Request_t{.mStartInterval=0, .mEndInterval=lRandomNr});
 
         const int lResult = GetFromOutBuffer();

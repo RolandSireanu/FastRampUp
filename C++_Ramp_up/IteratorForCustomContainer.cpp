@@ -79,18 +79,17 @@ class Container
 };
 
 // Strictly for a simple array, you need just a simple Iterator with begin and end methods
+// class Itegers
+// {
+//     using IntegersType = std::array<int,32>;
 
-class Itegers
-{
-    using IntegersType = std::array<int,32>;
+//     public:
+//         IntegersType::iterator begin() { return m_data.begin(); }
+//         IntegersType::iterator end() { return m_data.end(); }
 
-    public:
-        IntegersType::iterator begin() { return m_data.begin(); }
-        IntegersType::iterator end() { return m_data.end(); }
-
-    private:
-        IntegersType m_data;
-};
+//     private:
+//         IntegersType m_data;
+// };
 
 
 Container container;

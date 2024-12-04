@@ -32,32 +32,15 @@ int main()
     long lval;      unsigned long ulval;
     float fval;     double dval;
 
-    // 'c' -> int -> double -> addition
-    cout << 3.14L + 'b' << endl;
-
-    // ival -> double
-    cout << dval + ival << endl;
-
-    // fval -> double
-    cout << fval + dval << endl;
-
-    // ival -> float
-    cout << fval + ival << endl;
-
-    // dval -> int 
-    ival = dval;
-
-    // both -> int 
-    cout << sval + cval << endl;
-
-    // cval -> int -> float 
-    cout << cval + fval << endl;
-
-    // cval -> long
-    cout << cval + lval << endl;
-
-    // ival -> unsigned long
-    cout << ival + ulval << endl;
+    3.1400000000000000001L + static_cast<long double>(static_cast<int>('b'));
+    dval + static_cast<double>(ival);
+    static_cast<double>(fval) + dval;
+    fval + static_cast<float>(ival);
+    ival = static_cast<int>(dval);
+    static_cast<int>(sval) + static_cast<int>(cval);
+    static_cast<float>(static_cast<int>(cval)) + fval;
+    static_cast<long>(cval) + lval;
+    static_cast<unsigned long>(ival) + ulval;
 
     // Implicit conversion to bool
     char* text = "Implicit conversions";

@@ -52,13 +52,53 @@ Widget buildWidget(int value)
     // -> Single return path
     // -> Same type for the ret value and the type of returned object
     // -> Simple logic, without many branches
-/*
-    Generally, if a function appears to have a simple and straightforward structure, 
-    without complex branching, aliasing, or interactions that would make the lifetime of the returned object ambiguous, 
-    compilers are more likely to detect and apply RVO.
-    
+/*   
     Compiler flag that highlights situations where compiler couldn't apply RVO -Wnrvo
 */
+
+// ====================================== RVO examples =======================================
+
+Widget example1()
+{
+    Widget a;
+    return std::move(a);        // no rvo, move constructor is used
+}
+
+Widget example2()
+{
+    Widget w1;
+    Widget w2;
+
+    if((rand() % 100) < 5)
+    {
+        return w1;      
+    }
+    else 
+    {
+        return w2;
+    }                       // no rvo, compiler doesn;t know what branch to choose due to random function
+}
+
+const Widget example3()
+{
+    Widget const a;
+    return a;        // RVO
+}
+
+Widget example4()
+{
+    Widget a;
+    return a + 1;   // No rvo, it is a complex instruction 
+}
+
+Widget example4()
+{
+    int value = rand() % 100;
+    return value < 5 ? Widget(4) : Widget(3);           // RVO
+}
+
+// ============================================================================================
+
 
 
 int main()

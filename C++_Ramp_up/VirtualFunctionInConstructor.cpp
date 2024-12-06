@@ -7,9 +7,13 @@
 // During the execution of the BaseClass constructor, the talk() method is called. 
 // Here is the critical point: when a virtual function is called from a base class constructor, the dynamic type of the object is not yet the derived class type. 
 // Instead, it remains the base class type.
+// The derived class's vptr (virtual pointer) might point to the base class's virtual function table, leading to unintended calls of the base class's version 
+// even if the derived class overrides it.
 
-// The same principle applies to destructors. When the BaseClass destructor is invoked, if you call talk(), it will also call BaseClass::talk(), because at that point, the DerivedClass portion of the object is already destructed, and the BaseClass is what remains of the object.
-// This means that even though talk() is a virtual function, the base class's implementation is executed because the object construction has not completed; the DerivedClass part of the object is not fully initialized yet.
+// The same principle applies to destructors. When the BaseClass destructor is invoked, if you call talk(), it will also call BaseClass::talk(), because at that point, 
+// the DerivedClass portion of the object is already destructed, and the BaseClass is what remains of the object.
+// This means that even though talk() is a virtual function, the base class's implementation is executed because the object construction has not completed, 
+// the DerivedClass part of the object is not fully initialized yet.
 
 
 class BaseClass

@@ -14,8 +14,6 @@ template<typename T>
 using MyList = std::list<T>;
 MyList<Widget> l;
 
-
-
 //This is because typedef can't work with templates
 template<typename T>
 struct MyListStruct
@@ -44,8 +42,24 @@ typename std::remove_const<constint>::type w;
 
 template<typename T>
 using rc = typename std::remove_const<T>::type;
-
 rc<const int> v ;
+
+
+// Using keyword can bring member functions or entire namespaces into scope
+class Derived : Base {
+   public:
+      using Base::greet; 
+      void greet(string s) {
+        using namespace std;
+         cout << "Hello from " << s << endl;
+         // Instead of recursing, the greet() method
+         // of the base class is called.
+         greet();
+      }
+};
+
+
+
 
 int main()
 {

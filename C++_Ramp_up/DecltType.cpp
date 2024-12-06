@@ -14,6 +14,16 @@ decltype(auto) access(ContainerType&& c, int index)
     return std::forward<ContainerType>(c)[index];
 }
 
+struct S {
+    int a;
+    double b;
+};
+decltype(S::a + S::b) z;
+
+template<typename T, typename U>
+auto add(T t, U u) -> decltype(t + u) {
+    return t + u; // Return type is deduced based on the result of t + u
+}
 
 int main()
 {

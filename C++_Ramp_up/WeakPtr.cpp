@@ -47,10 +47,6 @@ shared_ptr<const Widget> readFastWidget(int id)
     return ret;
 }
 
-
-
-
-
 int main()
 {
 

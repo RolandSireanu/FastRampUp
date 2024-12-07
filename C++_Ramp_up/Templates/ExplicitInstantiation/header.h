@@ -11,6 +11,11 @@ public:
     }
 };
 
+// We are telling the compiler not to generate
+// specialization for int type. By declaring
+// it extern, the user guarantes that it is
+// defined somewhere else in another translation
+// unit
 extern template class Matematica<int>;
 
 #endif

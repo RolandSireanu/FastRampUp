@@ -23,7 +23,7 @@ function(configure_boost)
             message(STATUS "Boost build directory found. Building Boost...")
             # Build and install Boost
             execute_process(
-                COMMAND cmake --build ${Boost_SOURCE_DIR}/build --target install -j
+                COMMAND cmake --build ${Boost_SOURCE_DIR}/build -j --target install
                 WORKING_DIRECTORY ${Boost_SOURCE_DIR}/build
                 RESULT_VARIABLE cmake_install_result
             )
@@ -67,7 +67,7 @@ function(configure_boost)
     # Build and install Boost
     message(STATUS "Building and installing Boost...")
     execute_process(
-        COMMAND cmake --build ${Boost_SOURCE_DIR}/build --target install
+        COMMAND cmake --build ${Boost_SOURCE_DIR}/build -j --target install
         WORKING_DIRECTORY ${Boost_SOURCE_DIR}/build
         RESULT_VARIABLE cmake_build_result
     )

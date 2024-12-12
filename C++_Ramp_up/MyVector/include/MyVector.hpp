@@ -36,6 +36,19 @@ public:
     template<typename InputIt>
     void assign(InputIt aFirst, InputIt aLast) {}
     void assign(std::initializer_list<T> aInitList) {}
+    
+    const_reference at(size_type aIndex) {}
+    const_reference operator[](size_type aIndex) const {}
+    reference operator[](size_type aIndex) {}
+
+    const_reference front() const {}
+    reference front() {}
+    const_reference back() const {}
+    reference back() {}
+
+    const_pointer data() const {}
+    pointer data() const {}
+
 
 };
 

@@ -100,12 +100,16 @@ T&& my_forward(typename my_remove_reference<T>::type&& arg)
 template<typename T, typename Allocator = std::allocator<T>>
 class MyVector
 {
+    class Iterator;
+    class ConstIterator;
 public:
     using value_type = T;
     using reference_type = T&;
     using const_reference = const T&;
     using pointer = T*;
     using size_type = size_t;
+    using iterator = Iterator;
+    using const_iterator = ConstIterator;
     static constexpr int32_t scaleFactor = 2;
     
     //The Iterator should be copy-constructible/assignable and swappable
@@ -188,10 +192,10 @@ public:
     }
 
     reference_type operator[](size_type aPos) { return mPtrData[aPos]; }
-    Iterator begin() { return Iterator{mPtrData}; }
-    Iterator end() { return Iterator{mPtrData + mSize}; }
-    ConstIterator cbegin() { return ConstIterator{mPtrData}; }
-    ConstIterator cend() { return ConstIterator{mPtrData + mSize}; }
+    iterator begin() { return iterator{mPtrData}; }
+    iterator end() { return iterator{mPtrData + mSize}; }
+    const_iterator cbegin() { return const_iterator{mPtrData}; }
+    const_iterator cend() { return const_iterator{mPtrData + mSize}; }
 
     void resize(size_type aCount)
     {

@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <concepts>
+#include <algorithm>
 
 // =============================== Ranges in C++2a ============================
 // So... what are RANGES ?
@@ -77,6 +78,23 @@ std::ranges::filter_view<
 // ==============================================================================
 // =============================== RELATION BETWEEN std::views::xxx and std::ranges::xxx_view ============================================
 
+// ============================= Defining ranges with santinel =======================
+//When the end of a range is defined by an iterator, we need to know where that iterator should point to in advance. 
+// That’s not always possible — sometimes our end condition is only uncovered in the process of running the algorithm.
+//For example, imagine we wanted our range of numbers to end at the first negative number. 
+//We don’t necessarily know where that is in advance, so we can’t provide an iterator to it unless we first run a different algorithm to figure out where that iterator should point to.
+//A sentinel is a fairly generic concept within programming. It simply refers to something that can signal an algorithm to end.
+//Within the context of C++ ranges, sentinels are objects that can be compared to iterators, using the equality (==) operator. If the operator returns true, that’s the signal for the algorithm to stop.
+//A sentinel can be an iterator! But not all sentinels are iterators only
+
+template <typename T>
+struct Sentinel {
+  bool operator==(T Iter) const {
+    return Iter == ContainerEnd || *Iter < 0;
+  }
+
+  T ContainerEnd;
+};
 
 int main()
 {
@@ -86,6 +104,9 @@ int main()
 
     std::ranges::find(v.begin(), std::unreachable_sentinel, 55);
     std::ranges::find(v,55);
+
+    std::ranges::for_each(v.begin(), Sentinel{v.end()}, [](int arg){ return arg * arg;});
+
 
 
     return 0;

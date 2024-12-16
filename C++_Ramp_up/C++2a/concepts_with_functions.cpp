@@ -48,6 +48,9 @@ requires std::convertible_to<decltype(aElement), typename decltype(aContainer)::
         aContainer.insert(aElement);
 }
 
+// Set a return type requirement
+template<typename T>
+concept HasSize = requires (T a) { {a.size()} -> std::same_as<int>; };
 
 
 int main()

@@ -39,6 +39,17 @@ concept Number = std::integral<T> || std::floating_point<T>;
 //      Drawback is that you can't use complex expressions to articulate our constraints        
 #endif
 
+void push_element_in_container(auto& aContainer, auto& aElement)
+requires std::convertible_to<decltype(aElement), typename decltype(aContainer)::value_type>
+{
+    if constexpr(requires {aContainer.push_back(aElement);})
+        aContainer.push_back(aElement);
+    else
+        aContainer.insert(aElement);
+}
+
+
+
 int main()
 {
     int a{3};

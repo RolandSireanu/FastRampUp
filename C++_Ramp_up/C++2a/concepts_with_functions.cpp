@@ -3,7 +3,7 @@
 // Concepts are compile-time predicates which constrain types.
 
 
-#define VERSION 4
+#define VERSION 5
 
 template<typename T>
 concept Number = std::integral<T> || std::floating_point<T>;
@@ -37,6 +37,14 @@ concept Number = std::integral<T> || std::floating_point<T>;
 //  4. Abbreviated function templates        
         auto add(Number auto a, Number auto b) { return a+b; }
 //      Drawback is that you can't use complex expressions to articulate our constraints        
+
+#elif VERSION == 5
+//   5. Constraits on auto arguments
+        auto add(auto a, auto b) 
+        requires Number<decltype(a)> && Number<decltype(b)>
+        {
+                return a + b;
+        }
 #endif
 
 void push_element_in_container(auto& aContainer, auto& aElement)

@@ -87,27 +87,85 @@ std::ranges::filter_view<
 //Within the context of C++ ranges, sentinels are objects that can be compared to iterators, using the equality (==) operator. If the operator returns true, that’s the signal for the algorithm to stop.
 //A sentinel can be an iterator! But not all sentinels are iterators only
 
-template <typename T>
-struct Sentinel {
-  bool operator==(T Iter) const {
-    return Iter == ContainerEnd || *Iter < 0;
-  }
 
-  T ContainerEnd;
-};
+namespace Source
+{
+    auto generateRandomNumber = [gen = std::mt19937{std::random_device{}()}]() mutable {
+        std::uniform_int_distribution<> distr(1, 100); // Define the range [1, 100]
+        return distr(gen);
+    };
+
+    template<typename T = int>
+    vector<T> GetNewVector(int aNrOfElements = 10)
+    {
+        std::vector<T> v(aNrOfElements);
+        std::generate(v.begin(), v.end(), generateRandomNumber);
+        return v;
+    }
+}
+
+namespace Utils
+{
+    auto onlyEvenPred = [](const int arg){return arg%2==0;};
+
+    template<typename T, typename F>
+    class Sentinel
+    {
+    public:
+        bool operator==(T Iter) const{
+            return Iter == ContainerEnd || f(*Iter);
+        }
+
+        T ContainerEnd;
+        F f;
+    };
+
+    template<typename T>
+    void printContainer(T arg)
+    {
+        cout << "\n";
+        for(const auto& e : arg)
+            cout << e << " ";
+        cout << "\n";
+    }
+}
 
 int main()
 {
-    std::vector<int> v{7,3,1,0,12,55,12};
-    std::ranges::sort(v);
-    printContainer(v);
+    using std::ranges::for_each;
+    using namespace Utils;
+    using namespace Source;
 
-    std::ranges::find(v.begin(), std::unreachable_sentinel, 55);
-    std::ranges::find(v,55);
+    {
+        auto lVec {GetNewVector()};
+        // It returns a "subrange", subrange is a class that implement view_interface
+        auto lSubRange = std::ranges::subrange(lVec.begin(), Sentinel(lVec.end(), [](const int arg){ return arg % 2 == 0 && arg > 50;}));
+        printContainer(lSubRange);
+    }
+ 
+    {
+        // How to find the end of a range?
+        // Most of the range-based standard library algorithms return an object that includes an iterator pointing at where the sentinel was triggered
+        // For example, the std::ranges::for_each() algorithm returns an object with two fields:
+            // in - An iterator to where the sentinel was triggered
+            // fun - A reference to the function that we provided to the algorithm
+        auto lVec {GetNewVector()};
+        auto const [endOfRange, f] = std::ranges::for_each(lVec.begin(), 
+                                          Sentinel{lVec.end(), [](const int arg){return arg > 50; }},
+                                          [](const int arg){return arg * arg; });
+        
+        std::ranges::subrange lSub(lVec.begin(), endOfRange);
+        cout << "Elements smaller than 50 multipled by themselves :";
+        printContainer(lSub);
+    }
 
-    std::ranges::for_each(v.begin(), Sentinel{v.end()}, [](int arg){ return arg * arg;});
-
-
+    {
+        auto lVec {GetNewVector()};
+        auto localView = lVec | std::views::filter([](const int arg){ return arg%2 == 0;})
+                              | std::views::transform([](const int arg){ return arg*arg;})
+                              | std::views::reverse;
+        printContainer(localView);
+    }
 
     return 0;
 }

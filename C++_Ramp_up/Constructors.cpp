@@ -7,10 +7,11 @@ class Object
     public:
     Object() { cout << "Default constructor " << endl; }
     Object(const Object&) { cout << "Copy constructor " << endl; }
-    Object(const Object&&) { cout << "Move constructor " << endl; }
+    Object(Object&&) { cout << "Move constructor " << endl; }
     Object& operator=(const Object&) { cout << "Copy asigment operator" << endl; }
     Object& operator=(const Object&&) { cout << "Move asigment operator" << endl; }
     operator bool() { cout << "Bool operator "<<endl; return true; }
+
     Object(int a) { cout << "Converting constructor 1 int" << endl; }
     Object(int a, int b, int c) { cout << "Converting constructor 3 int args" << endl; }
     Object(std::initializer_list<int> arg) { cout <<"Constructor initializer_list " << endl; }

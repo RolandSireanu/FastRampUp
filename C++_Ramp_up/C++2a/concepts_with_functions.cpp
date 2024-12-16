@@ -52,6 +52,22 @@ requires std::convertible_to<decltype(aElement), typename decltype(aContainer)::
 template<typename T>
 concept HasSize = requires (T a) { {a.size()} -> std::same_as<int>; };
 
+// Use constraints to generate conditional code
+template<typename T>
+void myFunction()
+{
+    if constexpr(Number<T>)
+    {
+        // if it is a number, include this code
+        std::cout << "Path 1 \n";
+    }
+    else
+    {
+        // otherwise this one
+        std::cout << "Path 2 \n";
+    }
+}
+
 
 int main()
 {

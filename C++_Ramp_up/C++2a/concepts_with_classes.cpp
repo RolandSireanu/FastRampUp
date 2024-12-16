@@ -25,6 +25,26 @@ concept Number = std::integral<T> || std::floating_point<T>;
             T mValue;
         };
 
+//  3. Constraints on member functions
+        template<typename T>
+        class MyInt
+        {
+
+        }
+
+//  4. Constraints on member functions
+        template<typename T>
+        class MyInt
+        {
+        public:
+            // I am going to generate a specialization for any type that is integral || floating point
+            // For any other type, no specialization will be defined, only definition.
+            bool isZero() const requires std::integral<T> || std::floating_point<T>
+            {
+                return true;
+            }
+        };
+
 int main()
 {
     BigInt lLocal{23};

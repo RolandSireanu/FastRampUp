@@ -64,6 +64,12 @@ int main()
     partitionTest<PartType::PARTITION>(vector<int>{-3,2,1,19,20,-4,5,-87});
     partitionTest<PartType::STABLE_PARTITION>(vector<int>{-3,2,1,19,20,-4,5,-87});
 
+    {
+        vector<int> lVec {-3,-8,-1,4,9,6,1};
+        if(std::ranges::is_partitioned(lVec, [](int arg){ return arg < 0;}))
+            std::cout << "Yes it is partitioned \n";
+        std::cout << *(std::ranges::partition_point(lVec, [](int arg){return arg < 0;})) << "\n";
+    }    
 
     return 0;
 }

@@ -5,19 +5,7 @@
 #include <execution>
 #include <algorithm>
 #include <thread>
-
-
 using namespace std;
-
-template<typename T>
-void ComputeSum(int32_t argBeg, int32_t argEnd, const T& argTran, int64_t& argSum )
-{
-    for(int32_t i{argBeg}; i<argEnd; ++i)
-    {
-        argSum += argTran[i].value("amount", int64_t(0));
-    }
-}
-
 
 enum class ExecPolicy
 {
@@ -44,7 +32,7 @@ int64_t sumTransactions(const std::string& argFilename) {
     inputFile.close();
     
     // Iterate over the 'transactions' array
-    if (jsonData.contains("transactions")) 
+    if (nlohmann::json::accept(jsonData) && jsonData.contains("transactions")) 
     {
         if constexpr (T == ExecPolicy::SEQUENCIAL) 
         {

@@ -13,12 +13,16 @@ def generate_random_amount():
 
 def main():
     transactions = []
+    result = 0;
 
     for _ in range(10000000):
+        temp = generate_random_amount();
+        result += temp
+
         transaction = {
             "name": generate_random_name(),
             "vip": generate_random_vip_status(),
-            "amount": generate_random_amount()
+            "amount": temp
         }
         transactions.append(transaction)
 
@@ -28,6 +32,7 @@ def main():
         json.dump(json_data, file, indent=4)  # Pretty print with 4 spaces indentation
 
     print("JSON file created successfully.")
+    print(result)
 
 if __name__ == "__main__":
     main()

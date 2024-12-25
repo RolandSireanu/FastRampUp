@@ -3,6 +3,7 @@
 #include <nlohmann/json.hpp>
 #include <tbb/tbb.h>
 #include <execution>
+#include <numeric>
 #include <algorithm>
 #include <thread>
 using namespace std;
@@ -32,7 +33,7 @@ int64_t sumTransactions(const std::string& argFilename) {
     inputFile.close();
     
     // Iterate over the 'transactions' array
-    if (nlohmann::json::accept(jsonData) && jsonData.contains("transactions")) 
+    if (jsonData.contains("transactions")) 
     {
         if constexpr (T == ExecPolicy::SEQUENCIAL) 
         {
@@ -102,6 +103,14 @@ int64_t sumTransactions(const std::string& argFilename) {
     return lTotalAmount;
 }
 
+
+int32_t SumArray(const std::array<int, 10>& argArray)
+{
+    int32_t sum {};
+    for(const auto& lElement : argArray)
+        sum += lElement;
+    return sum;
+}
 
 int main()
 {

@@ -1,13 +1,12 @@
 cmake_minimum_required(VERSION 3.10)
 project(GBenchmark)
 
-# Include dependencies
-include(${CMAKE_SOURCE_DIR}/3rdparty/dependencies.cmake)
+# Set build type to Release
+set(CMAKE_BUILD_TYPE Release)
 
-find_package(benchmark REQUIRED)
-# ...existing code...
+add_subdirectory(3rdparty)
 
 # Add benchmark target
 add_executable(dummy_benchmark src/dummy_benchmark.cpp)
-target_link_libraries(dummy_benchmark benchmark::benchmark)
+target_link_libraries(dummy_benchmark benchmark::benchmark boost_container)
 

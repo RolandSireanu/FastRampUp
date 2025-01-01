@@ -8,5 +8,6 @@ add_subdirectory(3rdparty)
 
 # Add benchmark target
 add_executable(dummy_benchmark src/dummy_benchmark.cpp)
+
 target_link_libraries(dummy_benchmark benchmark::benchmark boost_container)
 

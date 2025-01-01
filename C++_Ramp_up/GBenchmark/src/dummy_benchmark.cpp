@@ -1,45 +1,55 @@
 #include <benchmark/benchmark.h>
 #include <boost/container/flat_map.hpp>
 #include <unordered_map>
+#include <map>
+#include <iostream>
 
-template <typename T>
-class Map : public benchmark::Fixture {
-public:
-  void SetUp(::benchmark::State& state) {
-    // Create a boost flat_map and insert 1000 random elements
-    for (int i = 0; i < mSize; i++) {
-      mMap.insert({i, rand()});
-    }
-  }
-
-  void TearDown(::benchmark::State& state) {
-  }
-
-  const int32_t mSize {1000000};
-  const int32_t mStep {100};
-  T mMap;
-
+enum class MapOperation
+{
+    Insert,
+    Find,
+    Erase
 };
 
-// Defines and registers `FooTest` using the class `MyFixture`.
-BENCHMARK_TEMPLATE_F(Map, FlatMapBenchmark, boost::container::flat_map<int,int>)(benchmark::State& st) {
-   for (auto _ : st) {
-    for(int32_t i{0}; i<mSize; ++i)
+template<typename T, MapOperation OP>
+void BM_RandomInsertion(benchmark::State& state) {
+  const int32_t lNoElements = state.range(0);
+  T lMap;
+
+  for(int32_t index{0}; index < lNoElements; ++index)
+  {
+    benchmark::DoNotOptimize(lMap.insert(std::make_pair(index, rand())));
+  }
+
+  if(lMap.size() != lNoElements)
+      throw std::runtime_error("BM_RandomInsertion::Not all elements have been inserted into map!\n");
+  
+  int32_t lCurrentIt {0};
+  for (auto _ : state) {  
+    for(int32_t i{0}; i<10000; ++i)
     {
-      int32_t lIndex {rand() % mSize};
-      (void)mMap.find(lIndex);
+      if constexpr(OP == MapOperation::Insert)
+        benchmark::DoNotOptimize(lMap.insert(std::make_pair(rand(), rand())));
+      else if constexpr(OP == MapOperation::Find)
+        benchmark::DoNotOptimize(lMap.find(rand() % lNoElements));
+      else if constexpr(OP == MapOperation::Erase)
+        benchmark::DoNotOptimize(lMap.erase(lCurrentIt*10000 + i));
     }
+    lCurrentIt++;
   }
 }
 
-BENCHMARK_TEMPLATE_F(Map, UnorderedMapBenchmark, std::unordered_map<int,int>)(benchmark::State& st) {
-   for (auto _ : st) {
-    for(int32_t i{0}; i<mSize; ++i)
-    {
-      int32_t lIndex {rand() % mSize};
-      (void)mMap.find(lIndex);
-    }
-  }
-}
+BENCHMARK_TEMPLATE(BM_RandomInsertion,  boost::container::flat_map<int, int>, MapOperation::Insert)->Unit(benchmark::kMillisecond)->Arg({1024*256})->Arg({1024*1024})->Arg({1024*1024*4})->Arg({1024*1024*16})->Arg({1024*1024*64});
+BENCHMARK_TEMPLATE(BM_RandomInsertion,  std::map<int, int>, MapOperation::Insert)->Unit(benchmark::kMillisecond)->Arg({1024*256})->Arg({1024*1024})->Arg({1024*1024*4})->Arg({1024*1024*16})->Arg({1024*1024*64});
+BENCHMARK_TEMPLATE(BM_RandomInsertion,  std::unordered_map<int, int>, MapOperation::Insert)->Unit(benchmark::kMillisecond)->Arg({1024*256})->Arg({1024*1024})->Arg({1024*1024*4})->Arg({1024*1024*16})->Arg({1024*1024*64});
+
+BENCHMARK_TEMPLATE(BM_RandomInsertion,  boost::container::flat_map<int, int>, MapOperation::Find)->Unit(benchmark::kMillisecond)->Arg({1024*256})->Arg({1024*1024})->Arg({1024*1024*4})->Arg({1024*1024*16})->Arg({1024*1024*64});
+BENCHMARK_TEMPLATE(BM_RandomInsertion,  std::map<int, int>, MapOperation::Find)->Unit(benchmark::kMillisecond)->Arg({1024*256})->Arg({1024*1024})->Arg({1024*1024*4})->Arg({1024*1024*16})->Arg({1024*1024*64});
+BENCHMARK_TEMPLATE(BM_RandomInsertion,  std::unordered_map<int, int>, MapOperation::Find)->Unit(benchmark::kMillisecond)->Arg({1024*256})->Arg({1024*1024})->Arg({1024*1024*4})->Arg({1024*1024*16})->Arg({1024*1024*64});
+
+BENCHMARK_TEMPLATE(BM_RandomInsertion,  boost::container::flat_map<int, int>, MapOperation::Erase)->Unit(benchmark::kMillisecond)->Arg({1024*256})->Arg({1024*1024})->Arg({1024*1024*4})->Arg({1024*1024*16})->Arg({1024*1024*64});
+BENCHMARK_TEMPLATE(BM_RandomInsertion,  std::map<int, int>, MapOperation::Erase)->Unit(benchmark::kMillisecond)->Arg({1024*256})->Arg({1024*1024})->Arg({1024*1024*4})->Arg({1024*1024*16})->Arg({1024*1024*64});
+BENCHMARK_TEMPLATE(BM_RandomInsertion,  std::unordered_map<int, int>, MapOperation::Erase)->Unit(benchmark::kMillisecond)->Arg({1024*256})->Arg({1024*1024})->Arg({1024*1024*4})->Arg({1024*1024*16})->Arg({1024*1024*64});
+
 
 BENCHMARK_MAIN();

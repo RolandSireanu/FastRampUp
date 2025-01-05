@@ -1,0 +1,3 @@
+/Users/sireanuroland/work/FastRampUp/C++_Ramp_up/Sfml/build/CMakeFiles/SfmlGame.dir
+/Users/sireanuroland/work/FastRampUp/C++_Ramp_up/Sfml/build/CMakeFiles/edit_cache.dir
+/Users/sireanuroland/work/FastRampUp/C++_Ramp_up/Sfml/build/CMakeFiles/rebuild_cache.dir

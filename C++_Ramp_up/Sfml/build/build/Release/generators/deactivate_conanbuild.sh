@@ -1,0 +1,1 @@
+. "/Users/sireanuroland/work/FastRampUp/C++_Ramp_up/Sfml/build/build/Release/generators/deactivate_conanbuildenv-release-armv8.sh"

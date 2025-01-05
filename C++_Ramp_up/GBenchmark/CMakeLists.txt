@@ -3,6 +3,7 @@ project(GBenchmark)
 
 # Set build type to Release
 set(CMAKE_BUILD_TYPE Release)
+set (CMAKE_CXX_STANDARD 20)
 
 add_subdirectory(3rdparty)
 

@@ -67,7 +67,7 @@ int64_t sumTransactions(const std::string& argFilename) {
             const auto& transactions = jsonData["transactions"];
             
             // Use std::reduce with parallel execution to sum the amounts directly from 'transactions'
-            lTotalAmount = std::reduce(std::execution::par, transactions.begin(), transactions.end(), int64_t(0),
+            lTotalAmount = std::reduce(transactions.begin(), transactions.end(), int64_t(0),
                 [](int64_t sum, const nlohmann::json& transaction) 
                 {
                     return sum + transaction.value("amount", int64_t(0));

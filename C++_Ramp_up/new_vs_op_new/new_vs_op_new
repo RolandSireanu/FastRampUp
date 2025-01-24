@@ -1,1 +1,7 @@
 https://stackoverflow.com/questions/10513425/what-are-operator-new-and-operator-delete
+
+Object* p = new Object(value);
+    => It is equivalent with 
+void* v = operator new(sizeof(Object));
+p = reinterpret_cast<Object*>(v);
+p->Object::Object(value); //this is not legal C++, it just represent the implementation effect

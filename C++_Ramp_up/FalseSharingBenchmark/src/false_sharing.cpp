@@ -12,7 +12,7 @@ struct alignas(64) AlignedInt32 {
 };
 
 const size_t lMaxNoThreads {std::thread::hardware_concurrency()};
-std::vector<AlignedInt32> lAcc(lMaxNoThreads);
+
 std::array<int32_t, 1024*64> lInData;
 
 template<auto D>
@@ -20,11 +20,12 @@ void work(const std::array<int32_t, D>& aData)
 {
   constexpr int32_t lExpectedResult = (((D-1) * D) / 2);
   std::vector<std::jthread> lThreads;
+  std::vector<AlignedInt32> lAcc(lMaxNoThreads, AlignedInt32{0});
   lThreads.reserve(lMaxNoThreads);
 
   for(int32_t i{0}; i<lMaxNoThreads; ++i)
   {
-    lThreads.emplace_back(std::jthread([&aData, i](){
+    lThreads.emplace_back(std::jthread([&aData, i, &lAcc](){
       for(const auto& e : aData)
       {
         lAcc[i].value += e;
@@ -56,6 +57,6 @@ static void BM_FalseSharing(benchmark::State& state)
 }
 
 
-BENCHMARK(BM_FalseSharing)->UseRealTime()->Unit(benchmark::kMillisecond)->Iterations(1);
+BENCHMARK(BM_FalseSharing)->UseRealTime()->Unit(benchmark::kMillisecond);
 
 BENCHMARK_MAIN();

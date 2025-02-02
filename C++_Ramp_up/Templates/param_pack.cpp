@@ -90,7 +90,22 @@
     // 2. Function parameter pack
     template<typename ...T> void f1(T ...t){}
     int f1(auto ...i){}
-    auto 
+
+
+// =========================== Fold expressions ==============================
+
+    template<typename TSet, typename ...Args>
+    void multi_insert(TSet& aSet, Args&& ...args)
+    {
+        (aSet.insert(std::forward<Args>(args)),...);
+    }
+    // Expands to ====>
+    // template<>
+    // void multi_insert<std::set<int, std::less<int>, std::allocator<int> >, int, int>(std::set<int, std::less<int>, std::allocator<int> > & aSet, int && __args1, int && __args2)
+    // {
+    //   aSet.insert(std::forward<int>(__args1)) , aSet.insert(std::forward<int>(__args2));
+    // }
+
 
 int main()
 {

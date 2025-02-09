@@ -5,6 +5,8 @@
 #include <array>
 #include <vector>
 #include <ranges>
+#include <iomanip>
+#include <bitset>
 
 using boost::asio::ip::tcp;
 
@@ -41,7 +43,8 @@ public:
         }
         posEnd = posEnd - posStart;
 
-        return lMessage.substr(posStart, posEnd);   // RVO
+        // return lMessage.substr(posStart, posEnd);   // RVO
+        return lMessage;
     }
 
     template<ResponseType RT>
@@ -68,16 +71,46 @@ public:
     void HandleConnection() 
     {
         std::cout << "Connection::HandleConnection\n";
-        boost::asio::async_read_until(*mSocket.get(), mStreamBuffer, "<end>", [me=shared_from_this()](const boost::system::error_code& aError, size_t aBytesTransferred){
+        mSocket->async_read_some(boost::asio::buffer(mBuffer, 4), [me=shared_from_this()](const boost::system::error_code& aError, size_t aBytesTransferred){
+            if(!aError)
+            {
+                // Merge 4 bytes into a 32-bit integer
+                me->mReadBufferSize = 0;
+                for (int i = 0; i < 4; ++i) 
+                {
+                    me->mReadBufferSize = (me->mReadBufferSize << 8) | static_cast<unsigned char>(me->mBuffer[i]);
+                }
+                std::cout << "Read buffer size: " << std::bitset<32>(me->mReadBufferSize) << "\n";
+                std::cout << "Read buffer size: " << me->mReadBufferSize << "\n";   
+
+                me->ReadNoBytes(me->mReadBufferSize);
+            }
+            else
+            {
+                std::cerr << "Error reading from client: " << aError.message() << "\n";
+            }
+        });
+    }
+
+    void ReadNoBytes(int32_t aNoBytes)
+    {
+        std::cout << "Connection::ReadNoBytes\n";
+        mReadBuffer.resize(aNoBytes);
+        mSocket->async_read_some(boost::asio::buffer(mReadBuffer), [me=shared_from_this()](const boost::system::error_code& aError, size_t aBytesTransferred){
             if(!aError)
             {
                 std::cout << "Read " << aBytesTransferred << " bytes from client.\n";                
-                std::cout << "Message: " << me->ExtractPayload(me->mStreamBuffer) << "\n";
+                for (int i = 0; i < aBytesTransferred; ++i) 
+                {
+                    std::cout << "Byte " << i << ": 0x" << std::hex << std::uppercase << static_cast<int>(static_cast<unsigned char>(me->mReadBuffer[i])) << std::endl;
+                }
+
                 me->Response<ResponseType::OK>();
             }
             else
             {
                 std::cerr << "Error reading from client: " << aError.message() << "\n";
+                me->Response<ResponseType::ERROR>();
             }
         });
     }
@@ -91,6 +124,9 @@ private:
     boost::asio::io_context& mIOContext;
     std::shared_ptr<tcp::socket> mSocket;
     boost::asio::streambuf mStreamBuffer;
+    char mBuffer[4];
+    uint32_t mReadBufferSize;
+    std::vector<char> mReadBuffer;
 };
 
 class Server

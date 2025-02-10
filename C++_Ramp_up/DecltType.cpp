@@ -20,6 +20,9 @@ struct S {
 };
 decltype(S::a + S::b) z;
 
+
+
+
 template<typename T, typename U>
 auto add(T t, U u) -> decltype(t + u) {
     return t + u; // Return type is deduced based on the result of t + u
@@ -28,8 +31,6 @@ auto add(T t, U u) -> decltype(t + u) {
 int main()
 {
     std::vector<int> v = {1,2,3,4,5};
-
-
     std::cout << access(v,2) << std::endl;
 
     //Modifying the container send to template function
@@ -48,6 +49,18 @@ int main()
 
     auto av = r;                //av will be int 
     decltype(auto) dav = r;     //dav will be const int&
+
+    // ===================================================================
+
+    const int f();
+    // In C++ the const qualifier is ignored for a value return type
+    decltype(f()) x = 0;        //x will be int, not const int
+
+    // ===================================================================
+    
+    S tempS {1, 3.4};
+    S* ptr {&tempS};
+    decltype((ptr->a)) a = tempS.a; // a will be const int& because of the parantheses, it is an lvalue expression
 
 
     return 0;

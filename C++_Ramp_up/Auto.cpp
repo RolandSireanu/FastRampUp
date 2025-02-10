@@ -11,6 +11,15 @@
 
 using uptr = std::unique_ptr<int>;
 
+// When auto can fail to deduce the right type?
+std::vector<bool> f()
+{
+    return {true,false,true};
+}
+
+// Vector of bool is a bitfield, so the [] will return a reference to a proxy object
+auto refToTempObject = f()[0];
+
 
 int main()
 {

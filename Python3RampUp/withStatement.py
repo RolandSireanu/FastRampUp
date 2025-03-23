@@ -44,8 +44,12 @@ def ManagedFile(fileName):
     finally:
         f.close()
 
+# syntactic sugar for:
+# tempObject = ManagedFile("file");
+# file = tempObject.__enter__();
 with ManagedFile("file") as file:
     file.write("Hello world !")
+# tempObject.__exit__()
 
 
     
